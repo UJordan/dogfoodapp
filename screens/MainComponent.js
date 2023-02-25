@@ -4,10 +4,14 @@ import { View, Platform, StyleSheet, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import Homepage from './Homepage';
-import Donorpage from './Donorpage';
-import Reciepientpage from './Reciepientpage';
-import Warehousepage from './Warehousepage';
+import Constants from 'expo-constants';
+import Homepage from './HomePage';
+import Donorpage from './DonorPage';
+import DonorInfoPage from './DonorInfoPage';
+import Reciepientpage from './ReciepientPage';
+import Warehousepage from './WarehousePage';
+import logo from './logo';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -64,7 +68,40 @@ const DonorNavigator = () => {
             />
             <Stack.Screen
                 name='DonorInfo'
-                component={DonorInfoScreen}
+                component={DonorInfoPage}
+                options={({ route }) => ({
+                    title: route.params.donor.name
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const RecipientNavigator = () => {
+    const Stack = createStackNavigator();
+    return (
+        <Stack.Navigator
+            initialRouteName='Recipients'
+            screenOptions={screenOptions}
+        >
+            <Stack.Screen
+                name='Donors'
+                component={RecipientPage}
+                options={({ navigation }) => ({
+                    title: 'Recipients Page',
+                    headerLeft: () => (
+                        <Icon
+                            name='list'
+                            type='font-awesome'
+                            iconStyle={styles.stackIcon}
+                            onPress={() => navigation.toggleDrawer()}
+                        />
+                    )
+                })}
+            />
+            <Stack.Screen
+                name='Recipiet'
+                component={RecipientInfoPage}
                 options={({ route }) => ({
                     title: route.params.donor.name
                 })}
@@ -88,8 +125,6 @@ const CustomDrawerContent = (props) => (
 );
 
 const Main = () => {
-    const dispatch = useDispatch();
-
     return (
         <View style={{ 
             flex: 1, 
@@ -103,7 +138,7 @@ const Main = () => {
             >
                 <Drawer.Screen
                     name='Home'
-                    component={Homepage}
+                    component={HomeNavigator}
                     options={{
                         title: 'Home',
                         drawerIcon: ({ color }) => (
@@ -122,6 +157,38 @@ const Main = () => {
                     component={DonorNavigator}
                     options={{
                         title: 'Donor Page',
+                        drawerIcon: ({ color }) => (
+                            <Icon
+                                name='list'
+                                type='font-awesome'
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Drawer.Screen
+                    name='ReciepientPage'
+                    component={RecipientNavigator}
+                    options={{
+                        title: 'Recipient Page',
+                        drawerIcon: ({ color }) => (
+                            <Icon
+                                name='list'
+                                type='font-awesome'
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Drawer.Screen
+                    name='Warehouse Page'
+                    component={WarehouseNavigator}
+                    options={{
+                        title: 'Warehouse Page',
                         drawerIcon: ({ color }) => (
                             <Icon
                                 name='list'
