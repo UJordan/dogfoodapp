@@ -100,7 +100,7 @@ const RecipientNavigator = () => {
                 })}
             />
             <Stack.Screen
-                name='Recipiet'
+                name='Recipients Page'
                 component={RecipientInfoPage}
                 options={({ route }) => ({
                     title: route.params.donor.name
