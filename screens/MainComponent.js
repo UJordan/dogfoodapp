@@ -30,14 +30,14 @@ const HomeNavigator = () => {
                 options={({ navigation }) => ({
                     title: 'Home',
                     headerLeft: () => (
-                        <Icon 
+                        <Icon
                             name='home'
                             type='font-awesome'
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
                     )
-                })} 
+                })}
             />
         </Stack.Navigator>
     );
@@ -120,8 +120,8 @@ const WarehouseNavigator = () => {
                 options={({ navigation }) => ({
                     title: 'Warehouse',
                     headerLeft: () => (
-                        <Icon 
-                            name='fa fa-building'
+                        <Icon
+                            name='shopping-cart'
                             type='font-awesome'
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
@@ -148,10 +148,10 @@ const CustomDrawerContent = (props) => (
 
 const Main = () => {
     return (
-        <View style={{ 
-            flex: 1, 
-            paddingTop:Platform.OS === 'ios' ? 0 : Constants.statusBarHeight 
-            }}
+        <View style={{
+            flex: 1,
+            paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
+        }}
         >
             <Drawer.Navigator
                 initialRouteName='Home'
