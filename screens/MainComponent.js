@@ -47,11 +47,11 @@ const DonorNavigator = () => {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator
-            initialRouteName='Donors'
+            initialRouteName='DonorPage'
             screenOptions={screenOptions}
         >
             <Stack.Screen
-                name='Donors'
+                name='DonorPage'
                 component={DonorPage}
                 options={({ navigation }) => ({
                     title: 'Donor Page',
@@ -121,7 +121,7 @@ const WarehouseNavigator = () => {
                     title: 'Warehouse',
                     headerLeft: () => (
                         <Icon 
-                            name='fa-warehouse'
+                            name='fa fa-building'
                             type='font-awesome'
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
@@ -213,7 +213,7 @@ const Main = () => {
                         title: 'Warehouse Page',
                         drawerIcon: ({ color }) => (
                             <Icon
-                                name='fa-warehouse'
+                                name='shopping-cart'
                                 type='font-awesome'
                                 size={24}
                                 iconStyle={{ width: 24 }}
