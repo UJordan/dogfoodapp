@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { View, Platform, StyleSheet, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import Constants from 'expo-constants';
-import Homepage from './HomePage';
-import Donorpage from './DonorPage';
+import HomePage from './HomePage';
+import DonorPage from './DonorPage';
 import DonorInfoPage from './DonorInfoPage';
-import Reciepientpage from './ReciepientPage';
-import Warehousepage from './WarehousePage';
-import logo from './logo';
+import RecipientPage from './RecipientPage';
+import RecipientInfoPage from './RecipientInfoPage.js';
+import WarehousePage from './WarehousePage';
+import logo from '../assets/logo.jpg';
 
 
 const Drawer = createDrawerNavigator();
@@ -26,8 +25,8 @@ const HomeNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptions}>
             <Stack.Screen
-                name="Home"
-                component={Homepage}
+                name="HomePage"
+                component={HomePage}
                 options={({ navigation }) => ({
                     title: 'Home',
                     headerLeft: () => (
@@ -53,9 +52,9 @@ const DonorNavigator = () => {
         >
             <Stack.Screen
                 name='Donors'
-                component={Donorpage}
+                component={DonorPage}
                 options={({ navigation }) => ({
-                    title: 'Donor page',
+                    title: 'Donor Page',
                     headerLeft: () => (
                         <Icon
                             name='list'
@@ -67,7 +66,7 @@ const DonorNavigator = () => {
                 })}
             />
             <Stack.Screen
-                name='DonorInfo'
+                name='Donor Info'
                 component={DonorInfoPage}
                 options={({ route }) => ({
                     title: route.params.donor.name
@@ -85,7 +84,7 @@ const RecipientNavigator = () => {
             screenOptions={screenOptions}
         >
             <Stack.Screen
-                name='Donors'
+                name='Recipients'
                 component={RecipientPage}
                 options={({ navigation }) => ({
                     title: 'Recipients Page',
@@ -100,16 +99,39 @@ const RecipientNavigator = () => {
                 })}
             />
             <Stack.Screen
-                name='Recipients Page'
+                name='Recipients Info'
                 component={RecipientInfoPage}
                 options={({ route }) => ({
-                    title: route.params.donor.name
+                    title: route.params.recipient.name
                 })}
             />
         </Stack.Navigator>
     );
 };
 
+const WarehouseNavigator = () => {
+    const Stack = createStackNavigator();
+
+    return (
+        <Stack.Navigator screenOptions={screenOptions}>
+            <Stack.Screen
+                name="Warehouse"
+                component={WarehousePage}
+                options={({ navigation }) => ({
+                    title: 'Warehouse',
+                    headerLeft: () => (
+                        <Icon 
+                            name='fa-warehouse'
+                            type='font-awesome'
+                            iconStyle={styles.stackIcon}
+                            onPress={() => navigation.toggleDrawer()}
+                        />
+                    )
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
 const CustomDrawerContent = (props) => (
     <DrawerContentScrollView {...props}>
         <View style={styles.drawerHeader}>
@@ -117,7 +139,7 @@ const CustomDrawerContent = (props) => (
                 <Image source={logo} style={styles.drawerImage} />
             </View>
             <View style={{ flex: 2 }}>
-                <Text style={styles.drawerHeaderText}>NuCamp</Text>
+                <Text style={styles.drawerHeaderText}>Portland Animal FoodBank</Text>
             </View>
         </View>
         <DrawerItemList {...props} labelStyle={{ fontWeight: 'bold' }} />
@@ -169,7 +191,7 @@ const Main = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name='ReciepientPage'
+                    name='Reciepient Page'
                     component={RecipientNavigator}
                     options={{
                         title: 'Recipient Page',
@@ -191,7 +213,7 @@ const Main = () => {
                         title: 'Warehouse Page',
                         drawerIcon: ({ color }) => (
                             <Icon
-                                name='list'
+                                name='fa-warehouse'
                                 type='font-awesome'
                                 size={24}
                                 iconStyle={{ width: 24 }}
