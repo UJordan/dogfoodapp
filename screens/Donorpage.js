@@ -1,12 +1,12 @@
-import { Text } from "react-native"
+// import { Text } from "react-native"
 
 
-const DonorPage = () => {
-    return (
-        <Text>
-            HomePage
-        </Text>
-    );
-};
+// const DonorPage = () => {
+//     return (
+//         <Text>
+//             HomePage
+//         </Text>
+//     );
+// };
 
-export default DonorPage;
+// export default DonorPage;
