@@ -47,11 +47,11 @@ const DonorNavigator = () => {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator
-            initialRouteName='Donors'
+            initialRouteName='DonorPage'
             screenOptions={screenOptions}
         >
             <Stack.Screen
-                name='Donors'
+                name='DonorPage'
                 component={DonorPage}
                 options={({ navigation }) => ({
                     title: 'Donor Page',
