@@ -44,7 +44,10 @@ const DonorPage = () => {
                             <Text style={styles.modalText}>
                                 Donor Email: {email}
                             </Text>
-
+                            <Text style={styles.modalText}>
+                                Donor Affilation: {affilation}
+                            </Text>
+                            
                             <Button
                                 onPress={() => {
                                     setShowModal(!showModal);
