@@ -30,14 +30,14 @@ const HomeNavigator = () => {
                 options={({ navigation }) => ({
                     title: 'Home',
                     headerLeft: () => (
-                        <Icon 
+                        <Icon
                             name='home'
                             type='font-awesome'
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
                     )
-                })} 
+                })}
             />
         </Stack.Navigator>
     );
@@ -47,11 +47,11 @@ const DonorNavigator = () => {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator
-            initialRouteName='Donors'
+            initialRouteName='DonorPage'
             screenOptions={screenOptions}
         >
             <Stack.Screen
-                name='Donors'
+                name='DonorPage'
                 component={DonorPage}
                 options={({ navigation }) => ({
                     title: 'Donor Page',
@@ -120,8 +120,8 @@ const WarehouseNavigator = () => {
                 options={({ navigation }) => ({
                     title: 'Warehouse',
                     headerLeft: () => (
-                        <Icon 
-                            name='fa-warehouse'
+                        <Icon
+                            name='shopping-cart'
                             type='font-awesome'
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
@@ -148,10 +148,10 @@ const CustomDrawerContent = (props) => (
 
 const Main = () => {
     return (
-        <View style={{ 
-            flex: 1, 
-            paddingTop:Platform.OS === 'ios' ? 0 : Constants.statusBarHeight 
-            }}
+        <View style={{
+            flex: 1,
+            paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
+        }}
         >
             <Drawer.Navigator
                 initialRouteName='Home'
@@ -213,7 +213,7 @@ const Main = () => {
                         title: 'Warehouse Page',
                         drawerIcon: ({ color }) => (
                             <Icon
-                                name='fa-warehouse'
+                                name='shopping-cart'
                                 type='font-awesome'
                                 size={24}
                                 iconStyle={{ width: 24 }}
