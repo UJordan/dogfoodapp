@@ -13,12 +13,16 @@ const styles = StyleSheet.create({
     loadingView: {
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1
+        flex: 1,
+        paddingTop: 10
     },
     loadingText: {
         color: '#5637DD',
         fontSize: 14,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 10
     }
 })
 export default Loading;
