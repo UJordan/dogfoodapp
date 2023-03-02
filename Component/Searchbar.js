@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         width: "90%",
+        paddingTop: 10
     },
     searchBar__unclicked: {
         padding: 10,

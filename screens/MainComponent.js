@@ -5,9 +5,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '
 import Constants from 'expo-constants';
 import HomePage from './HomePage';
 import DonorPage from './DonorPage';
-import DonorInfoPage from './DonorInfoPage';
 import RecipientPage from './RecipientPage';
-import RecipientInfoPage from './RecipientInfoPage.js';
 import WarehousePage from './WarehousePage';
 import logo from '../assets/logo.jpg';
 
@@ -65,13 +63,6 @@ const DonorNavigator = () => {
                     )
                 })}
             />
-            <Stack.Screen
-                name='Donor Info'
-                component={DonorInfoPage}
-                options={({ route }) => ({
-                    title: route.params.donor.name
-                })}
-            />
         </Stack.Navigator>
     );
 };
@@ -96,13 +87,6 @@ const RecipientNavigator = () => {
                             onPress={() => navigation.toggleDrawer()}
                         />
                     )
-                })}
-            />
-            <Stack.Screen
-                name='Recipients Info'
-                component={RecipientInfoPage}
-                options={({ route }) => ({
-                    title: route.params.recipient.name
                 })}
             />
         </Stack.Navigator>
