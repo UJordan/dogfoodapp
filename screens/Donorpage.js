@@ -17,7 +17,7 @@ const DonorPage = () => {
     const [affilation, setAffilation] = useState("");
     const [thanks, setThanks] = useState("");
 
-    const handlesubmit = () => {
+    const handleSubmit = () => {
         const newDonor = {
             name,
             number,
@@ -27,7 +27,7 @@ const DonorPage = () => {
         }
         dispatch(postDonor(newDonor)),
         setShowModal(!showModal),
-    };
+    }
 
     const renderDonorList = ({ item: donor }) => {
         return (
