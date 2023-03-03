@@ -28,7 +28,7 @@ const HomePage = () => {
                     ref={(c) => { this._carousel = c; }}
                     data={sliderData}
                     renderItem={renderBanner}
-                    sliderWidth={windowWidth - 40}
+                    sliderWidth={windowWidth}
                     itemWidth={300}
                     loop={true}
                 />
