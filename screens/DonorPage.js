@@ -1,128 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, FlatList, showModal, Modal, Button, Switch, Text, View  } from "react-native";
-import { ListItem, Input } from "react-native-elements";
+import { StyleSheet, FlatList, showModal, Modal, ScrollView, TouchableOpacity,Text, View  } from "react-native";
+import { ListItem, Input, Card } from "react-native-elements";
 import List from "../Component/List";
-import SearchBar from "../Component/Searchbar";
+import SearchBarComponent from "../Component/Searchbar";
 import Loading from '../Component/LoadingComponent';
-import DONORS from "../shared/donors";
+import { DONORS } from "../shared/donors";
+import { HeaderTitle } from "@react-navigation/stack";
 
 const DonorPage = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
-    const [donors, setdonors] = useState([]);
+    const [donors, setDonors] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [name, setName] = useState("");
-    const [number, setNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [affilation, setAffilation] = useState("");
-    const [thanks, setThanks] = useState("");
-
-    const handleSubmit = () => {
-        const newDonor = {
-            name,
-            number,
-            email,
-            affilation,
-            thanks
-        }
-        dispatch(postDonor(newDonor));
-        setShowModal(!showModal);
-    }
-
-    const renderDonorList = ({ item: donor }) => {
-        return (
-            <ListItem
-                onPress={() => {
-                    <Modal
-                        animationType='slide'
-                        transparent={false}
-                        visible={showModal}
-                        onRequestClose={() => setShowModal(!showModal)}
-                    >
-                        <View style={styles.modal}>
-                            <Text style={styles.modalTitle}>
-                                Donor Information
-                            </Text>
-                            <Text style={styles.modalText}>
-                                Donors Name: {name}
-                            </Text>
-                            <Input
-                                placeholder='Donor Name'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(name)=> setName(name)}
-                            />
-                            <Text style={styles.modalText}>
-                                Donor Phone Number: {number}
-                            </Text>
-                            <Input
-                                placeholder='Donor Phone Number'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(number)=> setNumber(number)}
-                            />
-                            <Text style={styles.modalText}>
-                                Donor Email: {email}
-                            </Text>
-                            <Input
-                                placeholder='Donor Email Address'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(email)=> setEmail(email)}
-                            />
-                            <Text style={styles.modalText}>
-                                Donor Affilation: {affilation}
-                            </Text>
-                            <Input
-                                placeholder='Donor Affilation'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(affiliation)=> setAffilation(affiliation)}
-                            />
-                            <Text style={styles.modalText}>
-                                Thank you sent?: {thanks}
-                            </Text>
-                            <Switch
-                                style={styles.formItem}
-                                value={thanks}
-                                trackColor={{ true: '#5637DD', false: null }}
-                                onValueChange={(thanks) => setThanks(thanks)}
-                            />
-                            <Button
-                                onPress={() => {
-                                    handleSubmit(!showModal)
-                                    resetForm();
-                            }}
-                            color='#5637DD'
-                            title='Submit'
-                            />
-                            <Button
-                                onPress={() => {
-                                    setShowModal(!showModal);
-                                    resetForm();
-                                }}
-                                color='#5637DD'
-                                title='Close'
-                            />
-                        </View>
-                    </Modal>
-                }}
-            >
-                <ListItem.Content>
-                    <ListItem.Title>{donor.name}</ListItem.Title>
-                </ListItem.Content>
-            </ListItem>
-        )
-    }
 
     useEffect(() => {
-        setdonors(donors);
+        setDonors(DONORS);
     }, []);
 
-    const myItemSeparator = () => {
-        return <View style={{ height: 1, backgroundColor: "grey",marginHorizontal:10}} />;
-        };
-    
     const myListEmpty = () => {
         return (
             <View style={{ alignItems:"center" }}>
@@ -131,34 +25,123 @@ const DonorPage = () => {
         );
     };
 
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
+
+    const renderDonorList = ({ item }) => {
+        console.log(item);
+        return (
+            <Card>
+                <View>
+                    <TouchableOpacity onPress={toggleModal}>
+                        <Text>{item.name}</Text>
+                    </TouchableOpacity>
+                </View>
+            </Card>   
+        )
+    }
+
+            // <Card>
+            //     <View key={item.id}>
+            //         <TouchableOpacity onPress={toggleModal() => showDonor(item)}>
+            //             <Text>{item.name}</Text>
+            //         </TouchableOpacity>
+            //     </View>
+            // </Card>
+            
+            // <Card>
+            //     <>
+            //         <View>
+            //             <TouchableOpacity onPress={toggleModal}>
+            //                 <Text>{item.name}</Text>
+            //             </TouchableOpacity>
+            //         </View>
+            //         <Card.Divider />
+            //         {donors.donorsArray.map((donor) => {
+            //             console.log(donor)
+            //             return (
+            //                 <ListItem key={donor.id}>
+            //                     <ListItem.Content>
+            //                         <ListItem.Title>{donor.name}</ListItem.Title>
+            //                         <ListItem.Subtitle>{donor.phoneNumber}</ListItem.Subtitle>
+            //                         <ListItem.Subtitle>{donor.email}</ListItem.Subtitle>
+            //                         <ListItem.Subtitle>{donor.withACompany}</ListItem.Subtitle>
+            //                         <ListItem.Subtitle>{donor.thanks}</ListItem.Subtitle>
+            //                     </ListItem.Content>
+            //                 </ListItem>
+            //             );
+            //         })}
+            //     </>
+            // </Card>
+
+                
+    // const showDonor = (singleDonor) => {
+    //     const filteredArray= DONORS.filter((item) => item.id !== singleDonor.id);)
+    // }
+                // <Text>{item.id}</Text>
+                // <Text>{item.phoneNumber}</Text>
+                // <Text>{item.email}</Text>
+                // <Text>{item.withACompany}</Text>
+                // <Text>{item.thanks}</Text>
+            
+
+    
+    // const SearchBar = () => {
+    //     console.log({searchPhrase})
+    //     console.log({setSearchPhrase})
+    //     return (
+    //         <View>
+    //         {!clicked && 
+    //             <SearchBarComponent
+    //                 searchPhrase={searchPhrase}
+    //                 setSearchPhrase={setSearchPhrase}
+    //                 clicked={clicked}
+    //                 setClicked={setClicked}
+    //             />
+    //         }
+                
+    //         {!DONORS ? (
+    //             <Loading/>
+    //         ) : (
+    //             <List
+    //                 searchPhrase={searchPhrase}
+    //                 data={DONORS}
+    //                 setClicked={setClicked}
+    //             />
+    //         )}
+    //         </View>
+    //     )
+    // }
+
+
     return (
-        <SafeAreaView style={styles.root}>
-            {!clicked}
-                <SearchBar
-                    searchPhrase={searchPhrase}
-                    setSearchPhrase={setSearchPhrase}
-                    clicked={clicked}
-                    setClicked={setClicked}
-                />
-                <Loading/>
-            {!donors ? (
-                <Loading/>
-            ) : (
-                <List
-                    searchPhrase={searchPhrase}
-                    data={donors}
-                    setClicked={setClicked}
-                />
-            )}
-            <Text>List of Donors:</Text>
+        <View>
+            <SearchBarComponent/>
+            <HeaderTitle style={styles.root}>List of Donors</HeaderTitle>
             <FlatList
-                data={DONORS}
+                data={donors}
                 renderItem={renderDonorList}
                 keyExtractor={(item) => item.id.toString()}
             />
-        </SafeAreaView>
-        
-        
+            {/* <Modal
+                visible={showModal}
+                animationType="slide"
+                onRequestClose={toggleModal}
+                >
+                <View>
+                    <Text>{item.id}</Text>
+                    <Text>{item.name}</Text>
+                    <Text>{item.phoneNumber}</Text>
+                    <Text>{item.email}</Text>
+                    <Text>{item.withACompany}</Text>
+                    <Text>{item.thanks}</Text>
+                    <TouchableOpacity onPress={toggleModal}>
+                        <Text>Close</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal> */}
+        </View>
     );
 };
 
@@ -167,7 +150,9 @@ export default DonorPage;
 const styles = StyleSheet.create({
     root: {
         justifyContent: "center",
+        alignSelf: "center",
         alignItems: "center",
+        padding: 10
     },
     title: {
         width: "100%",
@@ -175,5 +160,12 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: "bold",
         marginLeft: "10%",
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
     },
 });
