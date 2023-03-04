@@ -1,9 +1,19 @@
-import { Text, View, Image, ScrollView } from 'react-native';
+import * as React from 'react';
+import { Text, View, ScrollView, SafeAreaView } from 'react-native';
 import { Card, Button } from 'react-native-elements';
-import dogpic from '../assets/dogpic.jpeg';
+import Carousel from 'react-native-snap-carousel';
+import BannerSlider from '../Component/BannerSlider';
+import { windowWidth } from '../utils/Dimensions';
+import { sliderData } from '../shared/data';
 
 
 const HomePage = () => {
+    const renderBanner = ({ item, index }) => {
+        return (
+            <BannerSlider data={item} />
+        );
+    };
+
     return (
         <>
             <ScrollView>
@@ -14,10 +24,14 @@ const HomePage = () => {
                         </Text>
                     </View>
                 </Card>
-                <Card>
-                    <Image source={dogpic} style={{ alignItems: 'center', justifyContent: 'center', maxHeight: 300, maxWidth: 300, alignSelf: 'center', marginTop: 15}}>
-                    </Image>
-                </Card>
+                <Carousel 
+                    ref={(c) => { this._carousel = c; }}
+                    data={sliderData}
+                    renderItem={renderBanner}
+                    sliderWidth={windowWidth - 40}
+                    itemWidth={300}
+                    loop={true}
+                />
                 <Card>
                     <Button title='Donors'></Button>
                 </Card>

@@ -33,11 +33,10 @@ export const DONORS = [
     },
     {
         id: 4,
-        name: 'Lyssa Genney',
-        phoneNumber: '888-829-0758',
-        email: 'lgenny@ed.gov',
-        withACompany: 'no',
-        thanks: ''
+        name: 'Athena Trusler',
+        phoneNumber: '246-781-5779',
+        email: 'atruslerf@reverbnation.com',
+        withACompany: 'no'
     },
     {
         id: 5,
