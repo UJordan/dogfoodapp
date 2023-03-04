@@ -54,8 +54,8 @@ export default SearchBar;
 const styles = StyleSheet.create({
     container: {
         margin: 15,
-        justifyContent: "flex-start",
-        alignItems: "center",
+        justifyContent: "center",
+        alignSelf: "center",
         flexDirection: "row",
         width: "90%",
         paddingTop: 10
