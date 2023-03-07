@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
 import BannerSlider from '../Component/BannerSlider';
@@ -7,12 +7,13 @@ import { windowWidth } from '../utils/Dimensions';
 import { sliderData } from '../shared/data';
 
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
     const renderBanner = ({ item, index }) => {
         return (
             <BannerSlider data={item} />
         );
     };
+
 
     return (
         <>
@@ -33,13 +34,13 @@ const HomePage = () => {
                     loop={true}
                 />
                 <Card>
-                    <Button title='Donors'></Button>
+                    <Button title='Donors' onPress={() => navigation.navigate('Donor Page', { screen: 'DonorPage' })}></Button>
                 </Card>
                 <Card>
-                    <Button title='Recipient'></Button>
+                    <Button title='Recipient' onPress={() => navigation.navigate('Reciepient Page', { screen: 'Recipients' })}></Button>
                 </Card>
                 <Card>
-                    <Button title='Warehouse Inventory'></Button>
+                    <Button title='Warehouse Inventory' onPress={() => navigation.navigate('Warehouse Page', { screen: 'Warehouse' } )}></Button>
                 </Card>
             </ScrollView>
         </>

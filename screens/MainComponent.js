@@ -10,6 +10,7 @@ import WarehousePage from './WarehousePage';
 import logo from '../assets/logo.jpg';
 
 
+
 const Drawer = createDrawerNavigator();
 
 const screenOptions = {
