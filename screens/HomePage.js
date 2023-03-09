@@ -5,6 +5,9 @@ import Carousel from 'react-native-snap-carousel';
 import BannerSlider from '../Component/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
 import { sliderData } from '../shared/data';
+import CustomButton from '../Component/button.js';
+// import { buttonStyles } from '../utils/allStyles';
+// import allStyles from '../utils/allStyles';
 
 
 const HomePage = ({ navigation }) => {
@@ -14,6 +17,17 @@ const HomePage = ({ navigation }) => {
         );
     };
 
+    const handlePressDonor = () => {
+        navigation.navigate('Donor Page', { screen: 'DonorPage' })
+    };
+
+    const handlePressRecipient = () => {
+        navigation.navigate('Recipient Page', { screen: 'RecipientPage' })
+    };
+
+    const handlePressWarehouse = () => {
+        navigation.navigate('Warehouse Page', { screen: 'WarehousePage' })
+    };
 
     return (
         <>
@@ -34,14 +48,20 @@ const HomePage = ({ navigation }) => {
                     loop={true}
                 />
                 <Card>
-                    <Button title='Donors' onPress={() => navigation.navigate('Donor Page', { screen: 'DonorPage' })}></Button>
+                    <CustomButton title='Donors' onPress={handlePressDonor}/>
                 </Card>
                 <Card>
-                    <Button title='Recipient' onPress={() => navigation.navigate('Reciepient Page', { screen: 'Recipients' })}></Button>
+                    <CustomButton title='Recipients' onPress={handlePressRecipient}/>
                 </Card>
                 <Card>
-                    <Button title='Warehouse Inventory' onPress={() => navigation.navigate('Warehouse Page', { screen: 'Warehouse' } )}></Button>
+                    <CustomButton title='Warehouse' onPress={handlePressWarehouse}/>
                 </Card>
+
+                {/* <CustomButton 
+                        styles={buttonStyles.button}
+                        onPress={handlePress}
+                        title='Donors'
+                    /> */}
             </ScrollView>
         </>
         

@@ -7,14 +7,16 @@ import Loading from '../Component/LoadingComponent';
 import { DONORS } from "../shared/donors";
 import { HeaderTitle } from "@react-navigation/stack";
 import NewModal from "../Component/newModal";
+import allStyles from "../utils/allStyles";
+import CustomButton from "../Component/button";
 
 const DonorPage = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
     const [donors, setDonors] = useState([]);
-    const [showModal, setShowModal] = useState(false);
+    const [showDonor, setShowDonor] = useState(false);
     const [donor, setDonor] = useState({});
-    const [showNewModal, setShowNewModal] = useState(false);
+    const [showNewDonor, setShowNewDonor] = useState(false);
 
     useEffect(() => {
         setDonors(DONORS);
@@ -23,22 +25,19 @@ const DonorPage = () => {
     const myListEmpty = () => {
         return (
             <View style={{ alignItems:"center" }}>
-            <Text style={styles.item}>No data found</Text>
+            <Text style={allStyles.item}>No data found</Text>
             </View>
         );
     };
 
     const toggleModal = (donor) => {
-        setShowModal(!showModal);
+        setShowDonor(!showDonor);
         setDonor(donor)
     };
 
     const handleNewModal = () => {
-        setShowNewModal(!showNewModal);
-        return (
-            <NewModal/>
-        )
-        
+        setShowNewDonor(!showNewDonor);
+        console.log({showNewDonor})
     };
 
     const renderDonorList = ({ item }) => {
@@ -85,33 +84,35 @@ const DonorPage = () => {
 
     return (
         <View>
+            <NewModal 
+                setModalState={handleNewModal}
+                modalState={showNewDonor}
+            />
             <View style={{ fontSize: 20, margin: 25 }}>
-                <Button 
+                <CustomButton 
                     onPress={() => handleNewModal()}
                     title='Add New Donor'
-                    color='#5637DD'
-                    style={{ fontSize: 24, height: 100, borderRadius: 10, padding: 5 }}
                 />
             </View>
             <SearchBarComponent/>
-            <HeaderTitle style={styles.root}>List of Donors</HeaderTitle>
+            <HeaderTitle style={allStyles.root}>List of Donors</HeaderTitle>
             <FlatList
                 data={donors}
                 renderItem={renderDonorList}
                 keyExtractor={(item) => item.id.toString()}
             />
             <Modal
-                visible={showModal}
+                visible={showDonor}
                 animationType="slide"
                 onRequestClose={toggleModal}
                 >
                 <View>
-                    <Card.Title style={styles.modaltitle}>Donor Information</Card.Title>
+                    <Card.Title style={allStyles.modaltitle}>Donor Information</Card.Title>
                     <Card>
-                        <Text style={styles.modaltext}>Name: <Text style={styles.donorId}>{donor.name}</Text></Text>
+                        <Text style={allStyles.modaltext}>Name: <Text style={allStyles.donorId}>{donor.name}</Text></Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Phone Number: <Text style={styles.donorId}>{donor.phoneNumber}</Text></Text>
+                        <Text style={allStyles.modaltext}>Phone Number: <Text style={allStyles.donorId}>{donor.phoneNumber}</Text></Text>
                     </Card>
                     <Card>
                         <Text style={styles.modaltext}>Email: <Text style={styles.donorId}>{donor.email}</Text></Text>
@@ -127,17 +128,11 @@ const DonorPage = () => {
                     </Card>
                     <Card.Divider />
                     <View style={{ fontSize: 20, margin: 25 }}>
-                        <Button 
-                            onPress={() =>setShowModal(!showModal)}
+                        <CustomButton 
+                            onPress={() =>setShowDonor(!showDonor)}
                             title='cancel'
-                            color='#5637DD'
-                            
-                        >
-                        </Button>
+                        />
                     </View>
-                    
-                    
-                    
                 </View>
             </Modal>
         </View>
@@ -169,6 +164,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         marginTop: 20,
         fontWeight: "bold",
+        justifyContent: "center",
+        alignSelf: "center",
     },
     modaltext: {
         fontSize: 15,
