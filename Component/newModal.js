@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Button, Modal, ScrollView, Switch, TouchableOpacity,Text, View  } from "react-native";
-import { Input } from "react-native-elements";
+import React, { useState } from "react";
+import { StyleSheet, Modal, Switch, Text, View  } from "react-native";
+import { Input, Icon } from "react-native-elements";
 import CustomButton from "./button";
+
 
 const NewModal = ({setModalState, modalState}) => {
 
@@ -53,7 +54,7 @@ const NewModal = ({setModalState, modalState}) => {
                     </Text>
                     <Input
                         placeholder='Donor Name'
-                        leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                        leftIcon={{ type: 'font-awesome', name: 'user-o', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(name)=> setName(name)}
                     />
@@ -62,7 +63,7 @@ const NewModal = ({setModalState, modalState}) => {
                     </Text>
                     <Input
                         placeholder='Donor Phone Number'
-                        leftIcon={{ type: 'font-awesome', name: 'phone' }}
+                        leftIcon={{ type: 'font-awesome', name: 'phone', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(number)=> setNumber(number)}
                     />
@@ -71,7 +72,7 @@ const NewModal = ({setModalState, modalState}) => {
                     </Text>
                     <Input
                         placeholder='Donor Email Address'
-                        leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
+                        leftIcon={{ type: 'font-awesome', name: 'envelope-o', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(email)=> setEmail(email)}
                     />
@@ -80,26 +81,27 @@ const NewModal = ({setModalState, modalState}) => {
                     </Text>
                     <Input
                         placeholder='Donor Affilation'
-                        leftIcon={{ type: 'font-awesome', name: 'handshake-o' }}
+                        leftIcon={{ type: 'font-awesome', name: 'handshake-o', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(affiliation)=> setAffilation(affiliation)}
                     />
-                    <Text 
-                        style={styles.modalText}
-                        
-                    >
-                        Thank you sent?:
-                    </Text>
-                    <View 
-                        rightIcon={{ type: 'font-awesome', name: 'check-square-o' }}
-                        rightIconContainerStyle={{paddingRight: 10}}
-                    />
-                    <Switch
-                        style={styles.formItem}
-                        value={thanks}
-                        trackColor={{ true: '#5637DD', false: null }}
-                        onValueChange={(thanks) => setThanks(thanks)}
-                    />
+                    <View>
+                        <Text style={styles.modalText}>
+                            Thank you sent?:
+                        </Text>
+                        <Icon style={styles.iconContainer}
+                            name="check-square-o"
+                            type="font-awesome"
+                            color="#5637DD"
+                        />
+                        <Switch
+                            style={styles.iconContainer}
+                            value={thanks}
+                            trackColor={{ true: '#5637DD', false: null }}
+                            onValueChange={(thanks) => setThanks(thanks)}
+                        />
+                    </View>
+                    
                     <CustomButton
                         onPress={() => {
                             handleSubmit()
@@ -142,9 +144,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
     },
+    modal:{
+        justifyContent: 'center',
+        margin: 20,
+    },
     modalTitle: {
         fontSize: 25,
-        marginTop: 20,
+        margin: 10,
         fontWeight: "bold",
         justifyContent: "center",
         alignSelf: "center",
@@ -158,14 +164,10 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         color: 'black',
     },
-    // formRow: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     flex: 1,
-    //     flexDirection: 'row',
-    //     margin: 30,
-    //     color:'#5637DD'
-    // },
+    iconContainer: {
+        alignSelf: 'flex-end',
+        marginRight: 10,
+    },
 });
 
 export default NewModal;

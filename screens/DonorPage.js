@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Button, Modal, ScrollView, TouchableOpacity,Text, View  } from "react-native";
+import { StyleSheet, FlatList, Icon, Modal, TouchableOpacity,Text, View  } from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
@@ -9,6 +9,7 @@ import { HeaderTitle } from "@react-navigation/stack";
 import NewModal from "../Component/newModal";
 import allStyles from "../utils/allStyles";
 import CustomButton from "../Component/button";
+
 
 const DonorPage = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -57,28 +58,28 @@ const DonorPage = () => {
         console.log({setSearchPhrase})
         console.log({clicked})
         console.log({setClicked})
-        // return (
-        //     <View>
-        //     {!clicked && 
-        //         <SearchBarComponent
-        //             searchPhrase={searchPhrase}
-        //             setSearchPhrase={setSearchPhrase}
-        //             clicked={clicked}
-        //             setClicked={setClicked}
-        //         />
-        //     }
+        return (
+            <View>
+            {!clicked && 
+                <SearchBarComponent
+                    searchPhrase={searchPhrase}
+                    setSearchPhrase={setSearchPhrase}
+                    clicked={clicked}
+                    setClicked={setClicked}
+                />
+            }
                 
-        //     {!DONORS ? (
-        //         <Loading/>
-        //     ) : (
-        //         <List
-        //             searchPhrase={searchPhrase}
-        //             data={DONORS}
-        //             setClicked={setClicked}
-        //         />
-        //     )}
-        //     </View>
-        // )
+            {!DONORS ? (
+                <Loading/>
+            ) : (
+                <List
+                    searchPhrase={searchPhrase}
+                    data={DONORS}
+                    setClicked={setClicked}
+                />
+            )}
+            </View>
+        )
     }
 
 
@@ -109,10 +110,10 @@ const DonorPage = () => {
                 <View>
                     <Card.Title style={allStyles.modaltitle}>Donor Information</Card.Title>
                     <Card>
-                        <Text style={allStyles.modaltext}>Name: <Text style={allStyles.donorId}>{donor.name}</Text></Text>
+                        <Text style={styles.modaltext}>Name: <Text style={styles.donorId}>{donor.name}</Text></Text>
                     </Card>
                     <Card>
-                        <Text style={allStyles.modaltext}>Phone Number: <Text style={allStyles.donorId}>{donor.phoneNumber}</Text></Text>
+                        <Text style={styles.modaltext}>Phone Number: <Text style={styles.donorId}>{donor.phoneNumber}</Text></Text>
                     </Card>
                     <Card>
                         <Text style={styles.modaltext}>Email: <Text style={styles.donorId}>{donor.email}</Text></Text>
