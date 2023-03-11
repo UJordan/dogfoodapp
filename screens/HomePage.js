@@ -56,12 +56,6 @@ const HomePage = ({ navigation }) => {
                 <Card>
                     <CustomButton title='Warehouse' onPress={handlePressWarehouse}/>
                 </Card>
-
-                {/* <CustomButton 
-                        styles={buttonStyles.button}
-                        onPress={handlePress}
-                        title='Donors'
-                    /> */}
             </ScrollView>
         </>
         
