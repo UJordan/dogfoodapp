@@ -35,12 +35,13 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked}) => {
             )}
         </View>
             {clicked && (
-                <View>
+                <View style={styles.button}>
                     <Button
                         title="Cancel"
                         onPress={() => {
                         Keyboard.dismiss();
                         setClicked(false);
+                        setSearchPhrase("")
                         }}
                     ></Button>
                 </View>
@@ -48,8 +49,6 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked}) => {
         </View>
     );
 };
-
-export default SearchBar;
 
 const styles = StyleSheet.create({
     container: {
@@ -82,4 +81,9 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         width: "90%",
     },
+    button: {
+        backgroundColor: '#5637DD'
+    }
 });
+
+export default SearchBar;

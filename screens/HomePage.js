@@ -6,8 +6,7 @@ import BannerSlider from '../Component/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
 import { sliderData } from '../shared/data';
 import CustomButton from '../Component/button.js';
-// import { buttonStyles } from '../utils/allStyles';
-// import allStyles from '../utils/allStyles';
+
 
 
 const HomePage = ({ navigation }) => {

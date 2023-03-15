@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Icon, Modal, TouchableOpacity,Text, View  } from "react-native";
+import { StyleSheet, Modal, TouchableOpacity,Text, View  } from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
@@ -7,7 +7,6 @@ import Loading from '../Component/LoadingComponent';
 import { DONORS } from "../shared/donors";
 import { HeaderTitle } from "@react-navigation/stack";
 import NewModal from "../Component/newModal";
-import allStyles from "../utils/allStyles";
 import CustomButton from "../Component/button";
 
 
@@ -26,7 +25,7 @@ const DonorPage = () => {
     const myListEmpty = () => {
         return (
             <View style={{ alignItems:"center" }}>
-            <Text style={allStyles.item}>No data found</Text>
+            <Text style={styles.item}>No data found</Text>
             </View>
         );
     };
@@ -41,6 +40,11 @@ const DonorPage = () => {
         console.log({showNewDonor})
     };
 
+    const addNewDonor = (newDonor) => {
+        setDonors([...donors, newDonor]);
+        setShowNewDonor(false); // hide the modal
+    };
+
     const renderDonorList = ({ item }) => {
         return (
             <Card>
@@ -53,41 +57,13 @@ const DonorPage = () => {
         )
     };
 
-    const SearchBar = () => {
-        console.log({searchPhrase})
-        console.log({setSearchPhrase})
-        console.log({clicked})
-        console.log({setClicked})
-        return (
-            <View>
-            {!clicked && 
-                <SearchBarComponent
-                    searchPhrase={searchPhrase}
-                    setSearchPhrase={setSearchPhrase}
-                    clicked={clicked}
-                    setClicked={setClicked}
-                />
-            }
-                
-            {!DONORS ? (
-                <Loading/>
-            ) : (
-                <List
-                    searchPhrase={searchPhrase}
-                    data={DONORS}
-                    setClicked={setClicked}
-                />
-            )}
-            </View>
-        )
-    }
-
-
     return (
         <View>
             <NewModal 
                 setModalState={handleNewModal}
                 modalState={showNewDonor}
+                setDonors={setDonors}
+                donors={donors}
             />
             <View style={{ fontSize: 20, margin: 25 }}>
                 <CustomButton 
@@ -95,20 +71,32 @@ const DonorPage = () => {
                     title='Add New Donor'
                 />
             </View>
-            <SearchBarComponent/>
-            <HeaderTitle style={allStyles.root}>List of Donors</HeaderTitle>
-            <FlatList
-                data={donors}
-                renderItem={renderDonorList}
-                keyExtractor={(item) => item.id.toString()}
-            />
+            <View>
+                <SearchBarComponent
+                    searchPhrase={searchPhrase}
+                    setSearchPhrase={setSearchPhrase}
+                    clicked={clicked}
+                    setClicked={setClicked}
+                />
+            </View>
+            <HeaderTitle style={styles.root}>List of Donors</HeaderTitle>
+            {!donors ? (
+                <Loading/>
+            ) : (
+                <List
+                    searchPhrase={searchPhrase}
+                    data={donors}
+                    setClicked={setClicked}
+                    renderItem={renderDonorList}
+                    keyExtractor={(item) => item.id.toString()}
+                />
+            )}
             <Modal
                 visible={showDonor}
-                animationType="slide"
                 onRequestClose={toggleModal}
                 >
                 <View>
-                    <Card.Title style={allStyles.modaltitle}>Donor Information</Card.Title>
+                    <Card.Title style={styles.modaltitle}>Donor Information</Card.Title>
                     <Card>
                         <Text style={styles.modaltext}>Name: <Text style={styles.donorId}>{donor.name}</Text></Text>
                     </Card>
@@ -128,7 +116,7 @@ const DonorPage = () => {
                         <Text style={styles.modaltext}>Donor ID: <Text style={styles.donorId}>{donor.id}</Text></Text>
                     </Card>
                     <Card.Divider />
-                    <View style={{ fontSize: 20, margin: 25 }}>
+                    <View>
                         <CustomButton 
                             onPress={() =>setShowDonor(!showDonor)}
                             title='cancel'
@@ -145,7 +133,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
-        padding: 10
+        padding: 10,
+        width: "100%",
     },
     title: {
         width: "100%",
@@ -177,14 +166,9 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         color: 'black',
     },
-    // formRow: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     flex: 1,
-    //     flexDirection: 'row',
-    //     margin: 30,
-    //     color:'#5637DD'
-    // },
+    button: {
+
+    }
 });
 
 export default DonorPage;

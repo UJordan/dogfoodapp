@@ -5,7 +5,9 @@ export const FOOD = [
         type: 'Pure',
         flavor: 'Salmon and Sweet Potato',
         quantity: 10,
-        warehouseLocation: 1
+        aisle: 1,
+        bin: 1,
+        date: ''
     },
     {
         id: 1,

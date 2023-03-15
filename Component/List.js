@@ -2,25 +2,28 @@ import React from "react";
 import { StyleSheet, Text, View, FlatList, SafeAreaView,} from "react-native";
 
 
-const Item = ({ name, details }) => (
+const Item = ({ name, brand }) => (
     <View style={styles.item}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.details}>{details}</Text>
+        <Text style={styles.details}>{brand}</Text>
     </View>
 );
 
-const List = ({ searchPhrase, setClicked, data }) => {
-    const renderItem = ({ item }) => {
+const List = ({ searchPhrase, setClicked, data, renderItem, keyExtractor }) => {
+    const defaultRenderItem = ({ item }) => {
+        return <Item name={item.name} brand={item.brand} />;
+    };
+
+    const filterData = data.filter((item) => {
         if (searchPhrase === "") {
-            return <Item name={item.name} details={item.details} />;
+            return true;
         }
         if (item.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-            return <Item name={item.name} details={item.details} />;
+            return true;
         }
-        if (item.details.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-            return <Item name={item.name} details={item.details} />;
-        }
-    };
+    });
+
+    const defaultKeyExtractor = (item) => item.id
 
     return (
         <SafeAreaView style={styles.list__container}>
@@ -30,9 +33,9 @@ const List = ({ searchPhrase, setClicked, data }) => {
                 }}
             >
                 <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
+                    data={filterData}
+                    renderItem={renderItem || defaultRenderItem}
+                    keyExtractor={keyExtractor || defaultKeyExtractor}
                 />
             </View>
         </SafeAreaView>
