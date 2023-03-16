@@ -7,7 +7,7 @@ export const FOOD = [
         quantity: 10,
         aisle: 1,
         bin: 1,
-        date: '4/8/2022'
+        date: ''
     },
     {
         id: 1,

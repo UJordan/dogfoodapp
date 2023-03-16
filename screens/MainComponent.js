@@ -71,14 +71,14 @@ const RecipientNavigator = () => {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator
-            initialRouteName='Recipients'
+            initialRouteName='RecipientPage'
             screenOptions={screenOptions}
         >
             <Stack.Screen
-                name='Recipients'
+                name='Recipient Page'
                 component={RecipientPage}
                 options={({ navigation }) => ({
-                    title: 'Recipients Page',
+                    title: 'Recipient Page',
                     headerLeft: () => (
                         <Icon
                             name='list'
@@ -175,7 +175,7 @@ const Main = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name='Reciepient Page'
+                    name='Recipient Page'
                     component={RecipientNavigator}
                     options={{
                         title: 'Recipient Page',

@@ -1,128 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, FlatList, showModal, Modal, Button, Switch, Text, View  } from "react-native";
-import { ListItem, Input } from "react-native-elements";
+import { StyleSheet, Modal, TouchableOpacity,Text, View  } from "react-native";
+import { Card } from "react-native-elements";
 import List from "../Component/List";
-import SearchBar from "../Component/Searchbar";
+import SearchBarComponent from "../Component/Searchbar";
 import Loading from '../Component/LoadingComponent';
-import DONORS from "../shared/donors";
+import { DONORS } from "../shared/donors";
+import { HeaderTitle } from "@react-navigation/stack";
+import NewModal from "../Component/newModal";
+import CustomButton from "../Component/button";
+
 
 const DonorPage = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
-    const [donors, setdonors] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [name, setName] = useState("");
-    const [number, setNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [affilation, setAffilation] = useState("");
-    const [thanks, setThanks] = useState("");
-
-    const handleSubmit = () => {
-        const newDonor = {
-            name,
-            number,
-            email,
-            affilation,
-            thanks
-        }
-        dispatch(postDonor(newDonor));
-        setShowModal(!showModal);
-    }
-
-    const renderDonorList = ({ item: donor }) => {
-        return (
-            <ListItem
-                onPress={() => {
-                    <Modal
-                        animationType='slide'
-                        transparent={false}
-                        visible={showModal}
-                        onRequestClose={() => setShowModal(!showModal)}
-                    >
-                        <View style={styles.modal}>
-                            <Text style={styles.modalTitle}>
-                                Donor Information
-                            </Text>
-                            <Text style={styles.modalText}>
-                                Donors Name: {name}
-                            </Text>
-                            <Input
-                                placeholder='Donor Name'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(name)=> setName(name)}
-                            />
-                            <Text style={styles.modalText}>
-                                Donor Phone Number: {number}
-                            </Text>
-                            <Input
-                                placeholder='Donor Phone Number'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(number)=> setNumber(number)}
-                            />
-                            <Text style={styles.modalText}>
-                                Donor Email: {email}
-                            </Text>
-                            <Input
-                                placeholder='Donor Email Address'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(email)=> setEmail(email)}
-                            />
-                            <Text style={styles.modalText}>
-                                Donor Affilation: {affilation}
-                            </Text>
-                            <Input
-                                placeholder='Donor Affilation'
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                leftIconContainerStyle={{paddingRight: 10}}
-                                onChangeText={(affiliation)=> setAffilation(affiliation)}
-                            />
-                            <Text style={styles.modalText}>
-                                Thank you sent?: {thanks}
-                            </Text>
-                            <Switch
-                                style={styles.formItem}
-                                value={thanks}
-                                trackColor={{ true: '#5637DD', false: null }}
-                                onValueChange={(thanks) => setThanks(thanks)}
-                            />
-                            <Button
-                                onPress={() => {
-                                    handleSubmit(!showModal)
-                                    resetForm();
-                            }}
-                            color='#5637DD'
-                            title='Submit'
-                            />
-                            <Button
-                                onPress={() => {
-                                    setShowModal(!showModal);
-                                    resetForm();
-                                }}
-                                color='#5637DD'
-                                title='Close'
-                            />
-                        </View>
-                    </Modal>
-                }}
-            >
-                <ListItem.Content>
-                    <ListItem.Title>{donor.name}</ListItem.Title>
-                </ListItem.Content>
-            </ListItem>
-        )
-    }
+    const [donors, setDonors] = useState([]);
+    const [showDonor, setShowDonor] = useState(false);
+    const [donor, setDonor] = useState({});
+    const [showNewDonor, setShowNewDonor] = useState(false);
 
     useEffect(() => {
-        setdonors(donors);
+        setDonors(DONORS);
     }, []);
 
-    const myItemSeparator = () => {
-        return <View style={{ height: 1, backgroundColor: "grey",marginHorizontal:10}} />;
-        };
-    
     const myListEmpty = () => {
         return (
             <View style={{ alignItems:"center" }}>
@@ -131,16 +30,56 @@ const DonorPage = () => {
         );
     };
 
+    const toggleModal = (donor) => {
+        setShowDonor(!showDonor);
+        setDonor(donor)
+    };
+
+    const handleNewModal = () => {
+        setShowNewDonor(!showNewDonor);
+        console.log({showNewDonor})
+    };
+
+    const addNewDonor = (newDonor) => {
+        setDonors([...donors, newDonor]);
+        setShowNewDonor(false); // hide the modal
+    };
+
+    const renderDonorList = ({ item }) => {
+        return (
+            <Card>
+                <View>
+                    <TouchableOpacity onPress={() => toggleModal(item)}>
+                        <Text>{item.name}</Text>
+                    </TouchableOpacity>
+                </View>
+            </Card>   
+        )
+    };
+
     return (
-        <SafeAreaView style={styles.root}>
-            {!clicked}
-                <SearchBar
+        <View>
+            <NewModal 
+                setModalState={handleNewModal}
+                modalState={showNewDonor}
+                setDonors={setDonors}
+                donors={donors}
+            />
+            <View style={{ fontSize: 20, margin: 25 }}>
+                <CustomButton 
+                    onPress={() => handleNewModal()}
+                    title='Add New Donor'
+                />
+            </View>
+            <View>
+                <SearchBarComponent
                     searchPhrase={searchPhrase}
                     setSearchPhrase={setSearchPhrase}
                     clicked={clicked}
                     setClicked={setClicked}
                 />
-                <Loading/>
+            </View>
+            <HeaderTitle style={styles.root}>List of Donors</HeaderTitle>
             {!donors ? (
                 <Loading/>
             ) : (
@@ -148,26 +87,54 @@ const DonorPage = () => {
                     searchPhrase={searchPhrase}
                     data={donors}
                     setClicked={setClicked}
+                    renderItem={renderDonorList}
+                    keyExtractor={(item) => item.id.toString()}
                 />
             )}
-            <Text>List of Donors:</Text>
-            <FlatList
-                data={DONORS}
-                renderItem={renderDonorList}
-                keyExtractor={(item) => item.id.toString()}
-            />
-        </SafeAreaView>
-        
-        
+            <Modal
+                visible={showDonor}
+                onRequestClose={toggleModal}
+                >
+                <View>
+                    <Card.Title style={styles.modaltitle}>Donor Information</Card.Title>
+                    <Card>
+                        <Text style={styles.modaltext}>Name: <Text style={styles.donorId}>{donor.name}</Text></Text>
+                    </Card>
+                    <Card>
+                        <Text style={styles.modaltext}>Phone Number: <Text style={styles.donorId}>{donor.phoneNumber}</Text></Text>
+                    </Card>
+                    <Card>
+                        <Text style={styles.modaltext}>Email: <Text style={styles.donorId}>{donor.email}</Text></Text>
+                    </Card>
+                    <Card>
+                        <Text style={styles.modaltext}>Affiliation: <Text style={styles.donorId}>{donor.withACompany}</Text></Text>
+                    </Card>
+                    <Card>
+                        <Text style={styles.modaltext}>Thanked? <Text style={styles.donorId}>{donor.thanks}</Text></Text>
+                    </Card>
+                    <Card>
+                        <Text style={styles.modaltext}>Donor ID: <Text style={styles.donorId}>{donor.id}</Text></Text>
+                    </Card>
+                    <Card.Divider />
+                    <View>
+                        <CustomButton 
+                            onPress={() =>setShowDonor(!showDonor)}
+                            title='cancel'
+                        />
+                    </View>
+                </View>
+            </Modal>
+        </View>
     );
 };
-
-export default DonorPage;
 
 const styles = StyleSheet.create({
     root: {
         justifyContent: "center",
+        alignSelf: "center",
         alignItems: "center",
+        padding: 10,
+        width: "100%",
     },
     title: {
         width: "100%",
@@ -176,4 +143,32 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: "10%",
     },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    modaltitle: {
+        fontSize: 25,
+        marginTop: 20,
+        fontWeight: "bold",
+        justifyContent: "center",
+        alignSelf: "center",
+    },
+    modaltext: {
+        fontSize: 15,
+        fontWeight: "bold",
+    },
+    donorId: {
+        fontSize: 16,
+        fontWeight: 'normal',
+        color: 'black',
+    },
+    button: {
+
+    }
 });
+
+export default DonorPage;

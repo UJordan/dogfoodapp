@@ -1,17 +1,35 @@
-import * as React from 'react';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import React, { useState } from 'react';
+import { Text, View, ScrollView } from 'react-native';
+import useAccessibilityHelper from './AccessibilityHelper';
+import { Card } from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
 import BannerSlider from '../Component/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
 import { sliderData } from '../shared/data';
+import CustomButton from '../Component/button.js';
 
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
+    const [isFocused, setIsFocused] = useState(false);
+
+    useAccessibilityHelper(setIsFocused);
+
     const renderBanner = ({ item, index }) => {
         return (
             <BannerSlider data={item} />
         );
+    };
+
+    const handlePressDonor = () => {
+        navigation.navigate('Donor Page', { screen: 'DonorPage' })
+    };
+
+    const handlePressRecipient = () => {
+        navigation.navigate('Recipient Page', { screen: 'RecipientPage' })
+    };
+
+    const handlePressWarehouse = () => {
+        navigation.navigate('Warehouse Page', { screen: 'WarehousePage' })
     };
 
     return (
@@ -28,18 +46,27 @@ const HomePage = () => {
                     ref={(c) => { this._carousel = c; }}
                     data={sliderData}
                     renderItem={renderBanner}
-                    sliderWidth={windowWidth - 40}
+                    sliderWidth={windowWidth}
                     itemWidth={300}
                     loop={true}
                 />
                 <Card>
-                    <Button title='Donors'></Button>
+                    <CustomButton 
+                        title='Donors' 
+                        onPress={handlePressDonor}
+                    />
                 </Card>
                 <Card>
-                    <Button title='Recipient'></Button>
+                    <CustomButton 
+                        title='Recipients' 
+                        onPress={handlePressRecipient}
+                    />
                 </Card>
                 <Card>
-                    <Button title='Warehouse Inventory'></Button>
+                    <CustomButton 
+                        title='Warehouse' 
+                        onPress={handlePressWarehouse}
+                    />
                 </Card>
             </ScrollView>
         </>
