@@ -3,6 +3,9 @@ export const RECIPIENTS = [
         id: 0,
         name: 'Lola Roskilly',
         address: '97 Crest Line Avenue',
+        city: 'Mountain View',
+        state: 'CA',
+        zipcode: '95875',
         donatedQuantity: 1
     },
     {

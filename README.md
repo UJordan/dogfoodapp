@@ -17,3 +17,5 @@ The idea:
 The Wireframe:
 
 ![1678567080219](image/README/1678567080219.png)
+
+GitHub: We used version control to work together thru GitHub, using branches and pull requests with protection rules to prevent code overwriting by each other

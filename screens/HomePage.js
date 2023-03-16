@@ -1,16 +1,19 @@
-import * as React from 'react';
-import { Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import React, { useState } from 'react';
+import { Text, View, ScrollView } from 'react-native';
+import useAccessibilityHelper from './AccessibilityHelper';
+import { Card } from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
 import BannerSlider from '../Component/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
 import { sliderData } from '../shared/data';
 import CustomButton from '../Component/button.js';
-// import { buttonStyles } from '../utils/allStyles';
-// import allStyles from '../utils/allStyles';
 
 
 const HomePage = ({ navigation }) => {
+    const [isFocused, setIsFocused] = useState(false);
+
+    useAccessibilityHelper(setIsFocused);
+
     const renderBanner = ({ item, index }) => {
         return (
             <BannerSlider data={item} />
@@ -48,13 +51,22 @@ const HomePage = ({ navigation }) => {
                     loop={true}
                 />
                 <Card>
-                    <CustomButton title='Donors' onPress={handlePressDonor}/>
+                    <CustomButton 
+                        title='Donors' 
+                        onPress={handlePressDonor}
+                    />
                 </Card>
                 <Card>
-                    <CustomButton title='Recipients' onPress={handlePressRecipient}/>
+                    <CustomButton 
+                        title='Recipients' 
+                        onPress={handlePressRecipient}
+                    />
                 </Card>
                 <Card>
-                    <CustomButton title='Warehouse' onPress={handlePressWarehouse}/>
+                    <CustomButton 
+                        title='Warehouse' 
+                        onPress={handlePressWarehouse}
+                    />
                 </Card>
             </ScrollView>
         </>

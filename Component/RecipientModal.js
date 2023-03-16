@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-import { StyleSheet, Modal, Switch, Text, View  } from "react-native";
+import { StyleSheet, Modal, Text, View  } from "react-native";
 import { Input, Icon } from "react-native-elements";
 import CustomButton from "./button";
+import { Picker } from "@react-native-picker/picker";
+import StateDropDown from "./statedropdown";
 
 
-const NewModal = ({setModalState, modalState, setDonors, donors}) => {
+const RecipientModal = ({setModalState, modalState, setRecipients, recipients}) => {
+    const [ name, setName] = useState("");
+    const [ address, setAddress] = useState("");
+    const [ city, setCity] = useState("");
+    const [ state, setState] = useState("");
+    const [ zipcode, setZipcode] = useState("");
 
-    const [name, setName] = useState("");
-    const [number, setNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [affilation, setAffilation] = useState("");
-    const [thanks, setThanks] = useState("false");
 
     const handleSubmit = () => {
-        const newDonor = {
-            id:donors[donors.length - 1].id + 1,
+        const newRecipient = {
+            id:recipients[recipients.length - 1].id + 1,
             name,
-            number,
-            email,
-            affilation,
-            thanks
+            address,
+            city,
+            state,
+            zipcode,
         }
         setModalState();
-        setDonors([...donors,newDonor]);
+        setRecipients([...recipients,newRecipient]);
     };
 
     const myItemSeparator = () => {
@@ -33,10 +35,10 @@ const NewModal = ({setModalState, modalState, setDonors, donors}) => {
 
     const resetForm = () => {
         setName("");
-        setNumber("");
-        setEmail("");
-        setAffilation("");
-        setThanks("false")
+        setAddress("");
+        setCity("");
+        setState("");
+        setZipcode("false")
     }
 
     return (
@@ -49,70 +51,64 @@ const NewModal = ({setModalState, modalState, setDonors, donors}) => {
             >
                 <View style={styles.modal}>
                     <Text style={styles.modalTitle}>
-                        Donor Information
+                        Recipient Information
                     </Text>
                     <Text style={styles.modalText}>
-                        Donors Name:
+                        Name:
                     </Text>
                     <Input
-                        placeholder='Donor Name'
+                        placeholder='Name'
                         leftIcon={{ type: 'font-awesome', name: 'user-o', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(name)=> setName(name)}
                     />
                     <Text style={styles.modalText}>
-                        Donor Phone Number:
+                        Address:
                     </Text>
                     <Input
-                        placeholder='Donor Phone Number'
-                        leftIcon={{ type: 'font-awesome', name: 'phone', color: '#5637DD' }}
+                        placeholder='Address'
+                        leftIcon={{ type: 'font-awesome', name: 'address-card-o'
+                        , color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(number)=> setNumber(number)}
+                        onChangeText={(address)=> setAddress(address)}
                     />
                     <Text style={styles.modalText}>
-                        Donor Email:
+                        City:
                     </Text>
                     <Input
-                        placeholder='Donor Email Address'
-                        leftIcon={{ type: 'font-awesome', name: 'envelope-o', color: '#5637DD' }}
+                        placeholder='City'
+                        leftIcon={{ type: 'font-awesome', name: 'address-card-o'
+                        , color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(email)=> setEmail(email)}
+                        onChangeText={(city)=> setCity(city)}
                     />
                     <Text style={styles.modalText}>
-                        Donor Affilation:
+                        State:
                     </Text>
-                    <Input
-                        placeholder='Donor Affilation'
-                        leftIcon={{ type: 'font-awesome', name: 'handshake-o', color: '#5637DD' }}
+                    <StateDropDown
+                        placeholder='State'
+                        leftIcon={{ type: 'font-awesome', name: 'address-card-o'
+                        , color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(affiliation)=> setAffilation(affiliation)}
+                        onValueChange={(state)=> setState(state)}
                     />
-                    <View>
-                        <Text style={styles.modalText}>
-                            Thank you sent?:
-                        </Text>
-                        <Icon style={styles.iconContainer}
-                            name="check-square-o"
-                            type="font-awesome"
-                            color="#5637DD"
-                        />
-                        <Switch
-                            style={styles.iconContainer}
-                            value={thanks}
-                            trackColor={{ true: '#5637DD', false: null }}
-                            onValueChange={(thanks) => setThanks(thanks)}
-                        />
-                    </View>
                     
+                    <Text style={styles.modalText}>
+                        ZipCode:
+                    </Text>
+                    <Input
+                        placeholder='Zipcode'
+                        leftIcon={{ type: 'font-awesome', name: 'address-card-o'
+                        , color: '#5637DD' }}
+                        leftIconContainerStyle={{paddingRight: 10}}
+                        onChangeText={(zipcode)=> setZipcode(zipcode)}
+                    />
                     <CustomButton
                         onPress={() => {
                             handleSubmit()
                             resetForm();
                     }}
                         title='Submit'
-                        accessibilityLabel="Submit button"
-                        accessibilityRole="button"
-                        testID="submit-button"
                     />
                     <View style={{margin:10}} />
                     <CustomButton
@@ -121,9 +117,6 @@ const NewModal = ({setModalState, modalState, setDonors, donors}) => {
                             resetForm();
                         }}
                         title='Close'
-                        accessibilityLabel="Close button"
-                        accessibilityRole="button"
-                        testID="close-button"
                     />
                 </View>
             </Modal>
@@ -167,7 +160,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
     },
-    donorId: {
+    recipientId: {
         fontSize: 16,
         fontWeight: 'normal',
         color: 'black',
@@ -178,4 +171,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default NewModal;
+export default RecipientModal;
