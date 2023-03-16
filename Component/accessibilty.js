@@ -1,30 +1,17 @@
-import { useState, useEffect } from "react";
-import { AccessibilityInfo, StyleSheet } from 'react-native';
+import { useEffect } from "react";
+import { AccessibilityInfo } from 'react-native';
 
-const AccessibilityHelper = () => {
-    const [isHighContrastEnabled, setIsHighContrastEnabled] = useState(false);
-
+const useAccessibilityHelper = (setIsFocused) => {
     useEffect(() => {
-        const highContrastListener = AccessibilityInfo.addEventListener(
-        'reduceMotionChanged',
-        event => setIsHighContrastEnabled(event.reduceMotionEnabled),
+        const focusListener = AccessibilityInfo.addEventListener(
+            'focusChanged',
+            event => setIsFocused(event.focused),
         );
 
         return () => {
-        highContrastListener.remove();
+            focusListener.remove();
         };
     }, []);
-
-    const styles = StyleSheet.create({
-        container: {
-            backgroundColor: isHighContrastEnabled ? '#000000' : '#FFFFFF',
-            color: isHighContrastEnabled ? '#FFFFFF' : '#000000',
-            fontSize: isHighContrastEnabled ? 18 : 16,
-            // add more accessibility styles here...
-        },
-    });
-
-    return null;
 };
 
-export default AccessibilityHelper;
+export default useAccessibilityHelper;

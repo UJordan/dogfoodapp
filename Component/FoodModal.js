@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { StyleSheet, Modal, Text, View  } from "react-native";
-import { Input, Icon } from "react-native-elements";
+import { Input } from "react-native-elements";
 import CustomButton from "./button";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
-    const [ brand, setBrand] = useState("");
-    const [ type, setType] = useState("");
-    const [ flavor, setFlavor] = useState("");
-    const [ quantity, setQuantity] = useState("");
+    const [ brand, setBrand ] = useState("");
+    const [ type, setType ] = useState("");
+    const [ flavor, setFlavor ] = useState("");
+    const [ quantity, setQuantity ] = useState("");
     const [ aisle, setAisle ] = useState("");
     const [ bin, setBin ] = useState("");
     const [ date, setDate ] = useState(new Date());
-    const [showCalendar, setShowCalendar] = useState(false);
+    const [ showCalendar, setShowCalendar ] = useState(false);
 
     const handleSubmit = () => {
         const newFood = {
@@ -31,7 +31,7 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
         setFoods([...foods,newFood]);
     };
 
-    const onDateChange = (event, selectedDate) => {
+    const onDateChange = (selectedDate) => {
         const currentDate = selectedDate || date;
         setShowCalendar(Platform.OS === 'ios');
         setDate(currentDate);
