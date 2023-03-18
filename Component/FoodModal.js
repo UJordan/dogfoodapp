@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Modal, Text, View  } from "react-native";
+import { StyleSheet, Modal, Text, Button, View  } from "react-native";
 import { Input } from "react-native-elements";
 import CustomButton from "./button";
 import { Picker } from "@react-native-picker/picker";
@@ -60,11 +60,11 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                 visible={modalState}
                 onRequestClose={() => setModalState()}
             >
-                <View style={styles.modal}>
-                    <Text style={styles.modalTitle}>
+                <Text style={styles.modalTitle}>
                         Food Information
                     </Text>
-                    <Text style={styles.modalText}>
+                <View style={styles.formRow}>
+                    <Text style={styles.formLabel}>
                         Food Brand:
                     </Text>
                     <Input
@@ -73,7 +73,9 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(brand)=> setBrand(brand)}
                     />
-                    <Text style={styles.modalText}>
+                </View>
+                <View style={styles.formRow}>
+                    <Text style={styles.formLabel}>
                         Food Type:
                     </Text>
                     <Input
@@ -83,7 +85,9 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(type)=> setType(type)}
                     />
-                    <Text style={styles.modalText}>
+                </View>
+                <View style={styles.formRow}>
+                    <Text style={styles.formLabel}>
                         Flavor:
                     </Text>
                     <Input
@@ -93,13 +97,15 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                         leftIconContainerStyle={{paddingRight: 10}}
                         onChangeText={(flavor)=> setFlavor(flavor)}
                     />
-                    <Text style={styles.modalText}>
+                </View>
+                <View style={styles.formRow}>
+                    <Text style={styles.formLabel}>
                         Quantity:
                     </Text>
                     <Picker
                         placeholder='Quantity'
+                        style={styles.formItem}
                         selectedValue={quantity}
-                        style={{ height: 50, width: 150 }}
                         leftIcon={{ type: 'font-awesome', name: 'shopping-cart', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onValueChange={(quantity)=> setQuantity(quantity)}
@@ -110,10 +116,13 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                         <Picker.Item label="4" value="4" />
                         <Picker.Item label="5" value="5" />
                     </Picker>
+                    <Text style={styles.formLabel}>
+                        Aisle:
+                    </Text>
                     <Picker
                         placeholder='Aisle'
+                        style={styles.formItem}
                         selectedValue={aisle}
-                        style={{ height: 50, width: 150 }}
                         leftIcon={{ type: 'font-awesome', name: 'shopping-cart', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onValueChange={(aisle)=> setAisle(aisle)}
@@ -124,10 +133,13 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                         <Picker.Item label="Aisle 4" value="4" />
                         <Picker.Item label="Aisle 5" value="5" />
                     </Picker>
+                    <Text style={styles.formLabel}>
+                        Bin:
+                    </Text>
                     <Picker
                         placeholder='Bin'
+                        style={styles.formItem}
                         selectedValue={bin}
-                        style={{ height: 50, width: 150 }}
                         leftIcon={{ type: 'font-awesome', name: 'shopping-cart', color: '#5637DD' }}
                         leftIconContainerStyle={{paddingRight: 10}}
                         onValueChange={(bin)=> setBin(bin)}
@@ -138,23 +150,25 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                         <Picker.Item label="Bin 4" value="4" />
                         <Picker.Item label="Bin 5" value="5" />
                     </Picker>
-                    <View style={styles.formRow}>
+                </View>
+                <View style={styles.formRow}>
                         <Text style={styles.formLabel}>Date:</Text>
-                        <CustomButton
+                        <Button
                             onPress={() => setShowCalendar(!showCalendar)}
                             title={date.toLocaleDateString('en-US')}
                             accessibilityLabel='Tap me to select a date'
                         />
-                    </View>
-                    {showCalendar && (
-                        <DateTimePicker
-                            style={styles.formItem}
-                            value={date}
-                            mode='date'
-                            display='default'
-                            onChange={onDateChange}
-                        />
-                    )}
+                </View>
+                {showCalendar && (
+                    <DateTimePicker
+                        style={styles.formItem}
+                        value={date}
+                        mode='date'
+                        display='default'
+                        onChange={onDateChange}
+                    />
+                )}
+                <View>
                     <CustomButton
                         onPress={() => {
                             handleSubmit()
@@ -162,7 +176,7 @@ const FoodModal = ({setModalState, modalState, setFoods, foods}) => {
                     }}
                     title='Submit'
                     />
-                    <View style={{margin:10}} />
+                    <View style={{ margin:10 }}/>
                     <CustomButton
                         onPress={() => {
                             setModalState();

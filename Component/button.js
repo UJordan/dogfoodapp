@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import useAccessibilityHelper from './AccessibilityHelper';
+import useAccessibilityHelper from '../utils/accessibility.js';
 
 const CustomButton = ({onPress, title}) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -13,7 +13,7 @@ const CustomButton = ({onPress, title}) => {
             style={styles.appButtonContainer}
             accessible={true}
             accessibilityRole="button"
-            accessibilityLabel='Tap me to go to the {{title}} Page'
+            accessibilityLabel={`Tap me to go to the ${title} Page`}
             value={isFocused}
         >
             <Text style={styles.appButtonText}>{title}</Text>
@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#5637DD',
         borderRadius: 10,
         paddingVertical: 10,
+        fontSize: 20, 
+        margin: 10
     },
     appButtonText: {
         fontSize: 18,

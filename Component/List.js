@@ -33,7 +33,7 @@ const List = ({ searchPhrase, setClicked, data, renderItem, keyExtractor }) => {
                 }}
             >
                 <FlatList
-                    data={filterData}
+                    data={filterData.length >0? filterData:data}
                     renderItem={renderItem || defaultRenderItem}
                     keyExtractor={keyExtractor || defaultKeyExtractor}
                 />
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
         margin: 10,
         height: "85%",
         width: "100%",
+        flexGrowSafeAreaView: 1
     },
     item: {
         margin: 30,

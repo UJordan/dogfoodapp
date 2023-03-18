@@ -86,11 +86,8 @@ const RecipientModal = ({setModalState, modalState, setRecipients, recipients}) 
                         State:
                     </Text>
                     <StateDropDown
-                        placeholder='State'
-                        leftIcon={{ type: 'font-awesome', name: 'address-card-o'
-                        , color: '#5637DD' }}
-                        leftIconContainerStyle={{paddingRight: 10}}
-                        onValueChange={(state)=> setState(state)}
+                        state={state}
+                        setState={setState}
                     />
                     
                     <Text style={styles.modalText}>
