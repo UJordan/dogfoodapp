@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Modal, TouchableOpacity,Text, View  } from "react-native";
+import { StyleSheet, Modal, ScrollView, TouchableOpacity,Text, View  } from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
@@ -65,7 +65,7 @@ const DonorPage = () => {
                 setDonors={setDonors}
                 donors={donors}
             />
-            <View style={{ fontSize: 20, margin: 25 }}>
+            <View>
                 <CustomButton 
                     onPress={() => handleNewModal()}
                     title='Add New Donor'

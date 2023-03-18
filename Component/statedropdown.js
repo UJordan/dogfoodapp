@@ -9,6 +9,10 @@ const StateDropDown = ({state, setState}) => {
             <Picker
                 selectedValue={state}
                 onValueChange={(state)=> setState(state)}
+                placeholder='State'
+                leftIcon={{ type: 'font-awesome', name: 'address-card-o'
+                , color: '#5637DD' }}
+                leftIconContainerStyle={{paddingRight: 10}}
                 >
                 <Picker.Item label="Alabama" value="AL" />
                 <Picker.Item label="Alaska" value="AK" />
