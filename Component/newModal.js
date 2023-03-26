@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, Modal, Switch, Text, View  } from "react-native";
+import { StyleSheet, Modal, Switch, Text, View } from "react-native";
 import { Input, Icon } from "react-native-elements";
 import CustomButton from "./button";
 
-
-const NewModal = ({setModalState, modalState, setDonors, donors}) => {
-
+const NewModal = ({ setModalState, modalState, setDonors, donors }) => {
     const [name, setName] = useState("");
     const [number, setNumber] = useState("");
     const [email, setEmail] = useState("");
@@ -14,21 +12,27 @@ const NewModal = ({setModalState, modalState, setDonors, donors}) => {
 
     const handleSubmit = () => {
         const newDonor = {
-            id:donors[donors.length - 1].id + 1,
+            id: donors[donors.length - 1].id + 1,
             name,
             number,
             email,
             affilation,
-            thanks
-        }
+            thanks,
+        };
+        setDonors([...donors, newDonor]);
         setModalState();
-        setDonors([...donors,newDonor]);
     };
 
     const myItemSeparator = () => {
         return (
-            <View style={{ height: 1, backgroundColor: "grey",marginHorizontal:10}} />
-        )
+            <View
+                style={{
+                    height: 1,
+                    backgroundColor: "grey",
+                    marginHorizontal: 10,
+                }}
+            />
+        );
     };
 
     const resetForm = () => {
@@ -36,62 +40,68 @@ const NewModal = ({setModalState, modalState, setDonors, donors}) => {
         setNumber("");
         setEmail("");
         setAffilation("");
-        setThanks("false")
-    }
+        setThanks("false");
+    };
 
     return (
         <View>
             <Modal
-                animationType='slide'
+                animationType="slide"
                 transparent={false}
                 visible={modalState}
-                onRequestClose={() => setModalState()}
-            >
+                onRequestClose={() => setModalState()}>
                 <View style={styles.modal}>
-                    <Text style={styles.modalTitle}>
-                        Donor Information
-                    </Text>
-                    <Text style={styles.modalText}>
-                        Donors Name:
-                    </Text>
+                    <Text style={styles.modalTitle}>Donor Information</Text>
+                    <Text style={styles.modalText}>Donors Name:</Text>
                     <Input
-                        placeholder='Donor Name'
-                        leftIcon={{ type: 'font-awesome', name: 'user-o', color: '#5637DD' }}
-                        leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(name)=> setName(name)}
+                        placeholder="Donor Name"
+                        leftIcon={{
+                            type: "font-awesome",
+                            name: "user-o",
+                            color: "#5637DD",
+                        }}
+                        leftIconContainerStyle={{ paddingRight: 10 }}
+                        onChangeText={(name) => setName(name)}
                     />
-                    <Text style={styles.modalText}>
-                        Donor Phone Number:
-                    </Text>
+                    <Text style={styles.modalText}>Donor Phone Number:</Text>
                     <Input
-                        placeholder='Donor Phone Number'
-                        leftIcon={{ type: 'font-awesome', name: 'phone', color: '#5637DD' }}
-                        leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(number)=> setNumber(number)}
+                        placeholder="Donor Phone Number"
+                        leftIcon={{
+                            type: "font-awesome",
+                            name: "phone",
+                            color: "#5637DD",
+                        }}
+                        leftIconContainerStyle={{ paddingRight: 10 }}
+                        onChangeText={(number) => setNumber(number)}
                     />
-                    <Text style={styles.modalText}>
-                        Donor Email:
-                    </Text>
+                    <Text style={styles.modalText}>Donor Email:</Text>
                     <Input
-                        placeholder='Donor Email Address'
-                        leftIcon={{ type: 'font-awesome', name: 'envelope-o', color: '#5637DD' }}
-                        leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(email)=> setEmail(email)}
+                        placeholder="Donor Email Address"
+                        leftIcon={{
+                            type: "font-awesome",
+                            name: "envelope-o",
+                            color: "#5637DD",
+                        }}
+                        leftIconContainerStyle={{ paddingRight: 10 }}
+                        onChangeText={(email) => setEmail(email)}
                     />
-                    <Text style={styles.modalText}>
-                        Donor Affilation:
-                    </Text>
+                    <Text style={styles.modalText}>Donor Affilation:</Text>
                     <Input
-                        placeholder='Donor Affilation'
-                        leftIcon={{ type: 'font-awesome', name: 'handshake-o', color: '#5637DD' }}
-                        leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(affiliation)=> setAffilation(affiliation)}
+                        placeholder="Donor Affilation"
+                        leftIcon={{
+                            type: "font-awesome",
+                            name: "handshake-o",
+                            color: "#5637DD",
+                        }}
+                        leftIconContainerStyle={{ paddingRight: 10 }}
+                        onChangeText={(affiliation) =>
+                            setAffilation(affiliation)
+                        }
                     />
                     <View>
-                        <Text style={styles.modalText}>
-                            Thank you sent?:
-                        </Text>
-                        <Icon style={styles.iconContainer}
+                        <Text style={styles.modalText}>Thank you sent?:</Text>
+                        <Icon
+                            style={styles.iconContainer}
                             name="check-square-o"
                             type="font-awesome"
                             color="#5637DD"
@@ -99,28 +109,28 @@ const NewModal = ({setModalState, modalState, setDonors, donors}) => {
                         <Switch
                             style={styles.iconContainer}
                             value={thanks}
-                            trackColor={{ true: '#5637DD', false: null }}
+                            trackColor={{ true: "#5637DD", false: null }}
                             onValueChange={(thanks) => setThanks(thanks)}
                         />
                     </View>
-                    
+
                     <CustomButton
                         onPress={() => {
-                            handleSubmit()
+                            handleSubmit();
                             resetForm();
-                    }}
-                        title='Submit'
+                        }}
+                        title="Submit"
                         accessibilityLabel="Submit button"
                         accessibilityRole="button"
                         testID="submit-button"
                     />
-                    <View style={{margin:10}} />
+                    <View style={{ margin: 10 }} />
                     <CustomButton
                         onPress={() => {
                             setModalState();
                             resetForm();
                         }}
-                        title='Close'
+                        title="Close"
                         accessibilityLabel="Close button"
                         accessibilityRole="button"
                         testID="close-button"
@@ -128,7 +138,7 @@ const NewModal = ({setModalState, modalState, setDonors, donors}) => {
                 </View>
             </Modal>
         </View>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
@@ -136,7 +146,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
-        padding: 10
+        padding: 10,
     },
     title: {
         width: "100%",
@@ -146,14 +156,14 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: "#ccc",
     },
-    modal:{
-        justifyContent: 'center',
+    modal: {
+        justifyContent: "center",
         margin: 20,
     },
     modalTitle: {
@@ -169,11 +179,11 @@ const styles = StyleSheet.create({
     },
     donorId: {
         fontSize: 16,
-        fontWeight: 'normal',
-        color: 'black',
+        fontWeight: "normal",
+        color: "black",
     },
     iconContainer: {
-        alignSelf: 'flex-end',
+        alignSelf: "flex-end",
         marginRight: 10,
     },
 });
