@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Icon, Modal, TouchableOpacity,Text, View  } from "react-native";
+import { StyleSheet, Modal, TouchableOpacity, Text, View } from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
-import Loading from '../Component/LoadingComponent';
+import Loading from "../Component/LoadingComponent";
 import { FOOD } from "../shared/food";
 import { HeaderTitle } from "@react-navigation/stack";
 import FoodModal from "../Component/FoodModal";
 import CustomButton from "../Component/button";
-
 
 const WarehousePage = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -24,24 +23,24 @@ const WarehousePage = () => {
 
     const myListEmpty = () => {
         return (
-            <View style={{ alignItems:"center" }}>
-            <Text style={styles.item}>No data found</Text>
+            <View style={{ alignItems: "center" }}>
+                <Text style={styles.item}>No data found</Text>
             </View>
         );
     };
 
     const toggleModal = (food) => {
         setShowFood(!showFood);
-        setFood(food)
+        setFood(food);
     };
 
     const handleFoodModal = () => {
         setShowNewFood(!showNewFood);
-        console.log({showNewFood})
+        console.log({ showNewFood });
     };
 
     const addNewFood = (newFood) => {
-        setFoods([...food, newFood]);
+        setFoods([...foods, newFood]);
         setShowNewFood(false); // hide the modal
     };
 
@@ -50,25 +49,27 @@ const WarehousePage = () => {
             <Card>
                 <View>
                     <TouchableOpacity onPress={() => toggleModal(item)}>
-                        <Text>{item.brand} - {item.type} - {item.flavor}</Text>
+                        <Text>
+                            {item.name} - {item.type} - {item.flavor}
+                        </Text>
                     </TouchableOpacity>
                 </View>
-            </Card>   
-        )
+            </Card>
+        );
     };
 
     return (
-        <View>
-            <FoodModal 
+        <View style={{ flex: 1 }}>
+            <FoodModal
                 setModalState={handleFoodModal}
                 modalState={showNewFood}
                 setFoods={setFoods}
                 foods={foods}
             />
             <View style={{ fontSize: 20, margin: 25 }}>
-                <CustomButton 
+                <CustomButton
                     onPress={() => handleFoodModal()}
-                    title='Add New Food'
+                    title="Add New Food"
                 />
             </View>
             <View>
@@ -79,9 +80,9 @@ const WarehousePage = () => {
                     setClicked={setClicked}
                 />
             </View>
-            <HeaderTitle style={styles.root}>List of Food</HeaderTitle>
+            <HeaderTitle style={styles.root}>List of Foods</HeaderTitle>
             {!foods ? (
-                <Loading/>
+                <Loading />
             ) : (
                 <List
                     searchPhrase={searchPhrase}
@@ -93,33 +94,62 @@ const WarehousePage = () => {
             )}
             <Modal
                 visible={showFood}
-                onRequestClose={toggleModal}
-                >
+                onRequestClose={toggleModal}>
                 <View>
-                    <Card.Title style={styles.modaltitle}>Food Information</Card.Title>
+                    <Card.Title style={styles.modaltitle}>
+                        Food Information
+                    </Card.Title>
                     <Card>
-                        <Text style={styles.modaltext}>Name: <Text style={styles.foodId}>{food.name}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Brand:{" "}
+                            <Text style={styles.foodId}>{food.name}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Phone Number: <Text style={styles.foodId}>{food.phoneNumber}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Type: <Text style={styles.foodId}>{food.type}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Email: <Text style={styles.foodId}>{food.email}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Flavor:{" "}
+                            <Text style={styles.foodId}>{food.flavor}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Affiliation: <Text style={styles.foodId}>{food.withACompany}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Quantity:{" "}
+                            <Text style={styles.foodId}>{food.quantity}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Thanked? <Text style={styles.foodId}>{food.thanks}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Aisle:{" "}
+                            <Text style={styles.foodId}>{food.aisle}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Donor ID: <Text style={styles.foodId}>{food.id}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Bin: <Text style={styles.foodId}>{food.bin}</Text>
+                        </Text>
+                    </Card>
+                    <Card>
+                        <Text style={styles.modaltext}>
+                            Date Received:{" "}
+                            <Text style={styles.foodId}>{food.date}</Text>
+                        </Text>
+                    </Card>
+                    <Card>
+                        <Text style={styles.modaltext}>
+                            Food ID:{" "}
+                            <Text style={styles.foodId}>{food.id}</Text>
+                        </Text>
                     </Card>
                     <Card.Divider />
                     <View style={{ fontSize: 20, margin: 25 }}>
-                        <CustomButton 
-                            onPress={() =>setShowFood(!showFood)}
-                            title='cancel'
+                        <CustomButton
+                            onPress={() => setShowFood(!showFood)}
+                            title="cancel"
                         />
                     </View>
                 </View>
@@ -133,7 +163,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
-        padding: 10
+        padding: 10,
     },
     title: {
         width: "100%",
@@ -143,11 +173,11 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: "#ccc",
     },
     modaltitle: {
         fontSize: 25,
@@ -162,17 +192,9 @@ const styles = StyleSheet.create({
     },
     foodId: {
         fontSize: 16,
-        fontWeight: 'normal',
-        color: 'black',
+        fontWeight: "normal",
+        color: "black",
     },
-    // formRow: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     flex: 1,
-    //     flexDirection: 'row',
-    //     margin: 30,
-    //     color:'#5637DD'
-    // },
 });
 
 export default WarehousePage;

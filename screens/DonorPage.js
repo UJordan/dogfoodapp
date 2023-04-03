@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-    StyleSheet,
-    Modal,
-    ScrollView,
-    TouchableOpacity,
-    Text,
-    View,
-} from "react-native";
+import { StyleSheet, Modal, TouchableOpacity, Text, View } from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
@@ -64,14 +57,14 @@ const DonorPage = () => {
     };
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <NewModal
                 setModalState={handleNewModal}
                 modalState={showNewDonor}
                 setDonors={setDonors}
                 donors={donors}
             />
-            <View>
+            <View style={{ fontSize: 20, margin: 25 }}>
                 <CustomButton
                     onPress={() => handleNewModal()}
                     title="Add New Donor"
@@ -145,7 +138,7 @@ const DonorPage = () => {
                         </Text>
                     </Card>
                     <Card.Divider />
-                    <View>
+                    <View style={{ fontSize: 20, margin: 25 }}>
                         <CustomButton
                             onPress={() => setShowDonor(!showDonor)}
                             title="cancel"
@@ -163,7 +156,6 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center",
         padding: 10,
-        width: "100%",
     },
     title: {
         width: "100%",
@@ -194,9 +186,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "normal",
         color: "black",
-    },
-    list: {
-        // flex: 1,
     },
 });
 

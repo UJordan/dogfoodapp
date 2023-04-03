@@ -9,9 +9,9 @@ const FoodModal = ({ setModalState, modalState, setFoods, foods }) => {
     const [brand, setBrand] = useState("");
     const [type, setType] = useState("");
     const [flavor, setFlavor] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [aisle, setAisle] = useState("");
-    const [bin, setBin] = useState("");
+    const [quantity, setQuantity] = useState("1");
+    const [aisle, setAisle] = useState("1");
+    const [bin, setBin] = useState("1");
     const [date, setDate] = useState(new Date());
     const [showCalendar, setShowCalendar] = useState(false);
 
@@ -30,7 +30,7 @@ const FoodModal = ({ setModalState, modalState, setFoods, foods }) => {
         setFoods([...foods, newFood]);
     };
 
-    const onDateChange = (selectedDate) => {
+    const onDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShowCalendar(Platform.OS === "ios");
         setDate(currentDate);
@@ -52,10 +52,10 @@ const FoodModal = ({ setModalState, modalState, setFoods, foods }) => {
         setBrand("");
         setType("");
         setFlavor("");
-        setQuantity("");
-        setAisle("");
-        setBin("");
-        setDate("");
+        setQuantity("1");
+        setAisle("1");
+        setBin("1");
+        setDate(new Date());
     };
 
     return (
