@@ -4,7 +4,7 @@ import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
 import Loading from "../Component/LoadingComponent";
-import { DONORS } from "../shared/donors";
+// import { DONORS } from "../shared/donors";
 import { HeaderTitle } from "@react-navigation/stack";
 import NewModal from "../Component/newModal";
 import CustomButton from "../Component/button";
@@ -18,8 +18,19 @@ const DonorPage = () => {
     const [showNewDonor, setShowNewDonor] = useState(false);
 
     useEffect(() => {
-        setDonors(DONORS);
+        fetch("http://localhost:3000/donors").then(
+            (response)=>{
+                return response.json()
+            }
+        )
+        .catch(
+            (error)=>{
+                console.log(error) 
+            }
+        )
     }, []);
+
+
 
     const myListEmpty = () => {
         return (
