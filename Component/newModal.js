@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Modal, Switch, Text, View } from "react-native";
 import { Input, Icon } from "react-native-elements";
 import CustomButton from "./button";
+import { UserContext } from "../UserContext";
 
 const NewModal = ({ setModalState, modalState, setDonors, donors }) => {
     const [name, setName] = useState("");
@@ -9,10 +10,10 @@ const NewModal = ({ setModalState, modalState, setDonors, donors }) => {
     const [email, setEmail] = useState("");
     const [affilation, setAffilation] = useState("");
     const [thanks, setThanks] = useState("false");
+    const { userToken } = useContext(UserContext);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const newDonor = {
-            id: donors[donors.length - 1].id + 1,
             name,
             number,
             email,
@@ -20,6 +21,15 @@ const NewModal = ({ setModalState, modalState, setDonors, donors }) => {
             thanks,
         };
         setDonors([...donors, newDonor]);
+        const response = await fetch("http://localhost:3000/users/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + userToken,
+            },
+            body: JSON.stringify(),
+        });
+        const data = await response.json();
         setModalState();
     };
 

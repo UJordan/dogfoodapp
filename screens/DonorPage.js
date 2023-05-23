@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Modal, TouchableOpacity, Text, View } from "react-native";
+import {
+    StyleSheet,
+    Modal,
+    ScrollView,
+    TouchableOpacity,
+    Text,
+    View,
+} from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
@@ -18,19 +25,18 @@ const DonorPage = () => {
     const [showNewDonor, setShowNewDonor] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:3000/donors").then(
-            (response)=>{
-                return response.json()
+        async function getdata() {
+            try {
+                const response = await fetch("http://localhost:3000/donors");
+                const jsonDonorsData = await response.json();
+                console.log(jsonDonorsData);
+                setDonors(jsonDonorsData);
+            } catch (error) {
+                console.log(error);
             }
-        )
-        .catch(
-            (error)=>{
-                console.log(error) 
-            }
-        )
+        }
+        getdata();
     }, []);
-
-
 
     const myListEmpty = () => {
         return (
@@ -68,14 +74,14 @@ const DonorPage = () => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <View>
             <NewModal
                 setModalState={handleNewModal}
                 modalState={showNewDonor}
                 setDonors={setDonors}
                 donors={donors}
             />
-            <View style={{ fontSize: 20, margin: 25 }}>
+            <View>
                 <CustomButton
                     onPress={() => handleNewModal()}
                     title="Add New Donor"
@@ -98,7 +104,7 @@ const DonorPage = () => {
                     data={donors}
                     setClicked={setClicked}
                     renderItem={renderDonorList}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item?._id?.toString()}
                 />
             )}
             <Modal
@@ -145,11 +151,11 @@ const DonorPage = () => {
                     <Card>
                         <Text style={styles.modaltext}>
                             Donor ID:{" "}
-                            <Text style={styles.donorId}>{donor.id}</Text>
+                            <Text style={styles.donorId}>{donor._id}</Text>
                         </Text>
                     </Card>
                     <Card.Divider />
-                    <View style={{ fontSize: 20, margin: 25 }}>
+                    <View>
                         <CustomButton
                             onPress={() => setShowDonor(!showDonor)}
                             title="cancel"
@@ -167,6 +173,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center",
         padding: 10,
+        width: "100%",
     },
     title: {
         width: "100%",
@@ -198,6 +205,7 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         color: "black",
     },
+    button: {},
 });
 
 export default DonorPage;
