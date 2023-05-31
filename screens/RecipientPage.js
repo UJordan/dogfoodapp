@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Icon, Modal, TouchableOpacity,Text, View  } from "react-native";
+import {
+    StyleSheet,
+    FlatList,
+    Icon,
+    Modal,
+    TouchableOpacity,
+    Text,
+    View,
+} from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
-import Loading from '../Component/LoadingComponent';
+import Loading from "../Component/LoadingComponent";
 import { RECIPIENTS } from "../shared/recipient";
 import { HeaderTitle } from "@react-navigation/stack";
 import RecipientModal from "../Component/RecipientModal";
 import CustomButton from "../Component/button";
-
 
 const RecipientPage = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -24,20 +31,20 @@ const RecipientPage = () => {
 
     const myListEmpty = () => {
         return (
-            <View style={{ alignItems:"center" }}>
-            <Text style={styles.item}>No data found</Text>
+            <View style={{ alignItems: "center" }}>
+                <Text style={styles.item}>No data found</Text>
             </View>
         );
     };
 
     const toggleModal = (recipient) => {
         setShowRecipient(!showRecipient);
-        setRecipient(recipient)
+        setRecipient(recipient);
     };
 
     const handleRecipientModal = () => {
         setShowNewRecipient(!showNewRecipient);
-        console.log({showNewRecipient})
+        console.log({ showNewRecipient });
     };
 
     const renderRecipientList = ({ item }) => {
@@ -48,22 +55,22 @@ const RecipientPage = () => {
                         <Text>{item.name}</Text>
                     </TouchableOpacity>
                 </View>
-            </Card>   
-        )
+            </Card>
+        );
     };
 
     return (
-        <View>
-            <RecipientModal 
+        <View style={{ flex: 1 }}>
+            <RecipientModal
                 setModalState={handleRecipientModal}
                 modalState={showNewRecipient}
                 setRecipients={setRecipients}
                 recipients={recipients}
             />
             <View style={{ fontSize: 20, margin: 25 }}>
-                <CustomButton 
+                <CustomButton
                     onPress={() => handleRecipientModal()}
-                    title='Add New Recipient'
+                    title="Add New Recipient"
                 />
             </View>
             <View>
@@ -76,7 +83,7 @@ const RecipientPage = () => {
             </View>
             <HeaderTitle style={styles.root}>List of Recipients</HeaderTitle>
             {!recipients ? (
-                <Loading/>
+                <Loading />
             ) : (
                 <List
                     searchPhrase={searchPhrase}
@@ -89,33 +96,64 @@ const RecipientPage = () => {
             <Modal
                 visible={showRecipient}
                 animationType="slide"
-                onRequestClose={toggleModal}
-                >
+                onRequestClose={toggleModal}>
                 <View>
-                    <Card.Title style={styles.modaltitle}>Recipient Information</Card.Title>
+                    <Card.Title style={styles.modaltitle}>
+                        Recipient Information
+                    </Card.Title>
                     <Card>
-                        <Text style={styles.modaltext}>Name: <Text style={styles.recipientId}>{recipient.name}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Name:{" "}
+                            <Text style={styles.recipientId}>
+                                {recipient.name}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Address: <Text style={styles.recipientId}>{recipient.address}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Address:{" "}
+                            <Text style={styles.recipientId}>
+                                {recipient.address}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>City: <Text style={styles.recipientId}>{recipient.city}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            City:{" "}
+                            <Text style={styles.recipientId}>
+                                {recipient.city}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>State: <Text style={styles.recipientId}>{recipient.state}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            State:{" "}
+                            <Text style={styles.recipientId}>
+                                {recipient.state}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>ZipCode: <Text style={styles.recipientId}>{recipient.zipcode}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            ZipCode:{" "}
+                            <Text style={styles.recipientId}>
+                                {recipient.zipcode}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Donor ID: <Text style={styles.recipientId}>{recipient.id}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Donor ID:{" "}
+                            <Text style={styles.recipientId}>
+                                {recipient.id}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card.Divider />
                     <View style={{ fontSize: 20, margin: 25 }}>
-                        <CustomButton 
-                            onPress={() =>setShowRecipient(!showRecipient)}
-                            title='cancel'
+                        <CustomButton
+                            onPress={() => setShowRecipient(!showRecipient)}
+                            title="cancel"
                         />
                     </View>
                 </View>
@@ -129,7 +167,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         alignItems: "center",
-        padding: 10
+        padding: 10,
     },
     title: {
         width: "100%",
@@ -139,11 +177,11 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: "#ccc",
     },
     modaltitle: {
         fontSize: 25,
@@ -158,17 +196,9 @@ const styles = StyleSheet.create({
     },
     recipientId: {
         fontSize: 16,
-        fontWeight: 'normal',
-        color: 'black',
+        fontWeight: "normal",
+        color: "black",
     },
-    // formRow: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     flex: 1,
-    //     flexDirection: 'row',
-    //     margin: 30,
-    //     color:'#5637DD'
-    // },
 });
 
 export default RecipientPage;

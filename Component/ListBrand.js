@@ -3,19 +3,19 @@ import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
 
 const Item = ({ name, brand }) => (
     <View style={styles.item}>
-        <Text style={styles.title}>{name}</Text>
         <Text style={styles.details}>{brand}</Text>
     </View>
 );
 
-const List = ({ searchPhrase, setClicked, data, renderItem, keyExtractor }) => {
-    const defaultRenderItem = ({ item }) => {
-        return (
-            <Item
-                name={item.name}
-                brand={item.brand}
-            />
-        );
+const ListBrand = ({
+    searchPhrase,
+    setClicked,
+    data,
+    renderBrand,
+    keyExtractor,
+}) => {
+    const defaultRenderBrand = ({ item }) => {
+        return <Item brand={item.brand} />;
     };
 
     const filterData = data.filter((item) => {
@@ -23,7 +23,7 @@ const List = ({ searchPhrase, setClicked, data, renderItem, keyExtractor }) => {
             return true;
         }
         if (
-            item.name
+            item.brand
                 .toUpperCase()
                 .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
         ) {
@@ -40,16 +40,15 @@ const List = ({ searchPhrase, setClicked, data, renderItem, keyExtractor }) => {
                 setClicked(false);
             }}>
             <FlatList
-                // data={data}
                 data={filterData.length > 0 ? filterData : data}
-                renderItem={renderItem || defaultRenderItem}
+                renderItem={renderBrand || defaultRenderBrand}
                 keyExtractor={keyExtractor || defaultKeyExtractor}
             />
         </SafeAreaView>
     );
 };
 
-export default List;
+export default ListBrand;
 
 const styles = StyleSheet.create({
     list__container: {

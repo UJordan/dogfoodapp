@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Modal, ScrollView, TouchableOpacity,Text, View  } from "react-native";
+import {
+    StyleSheet,
+    Modal,
+    ScrollView,
+    TouchableOpacity,
+    Text,
+    View,
+} from "react-native";
 import { Card } from "react-native-elements";
 import List from "../Component/List";
 import SearchBarComponent from "../Component/Searchbar";
-import Loading from '../Component/LoadingComponent';
-import { DONORS } from "../shared/donors";
+import Loading from "../Component/LoadingComponent";
+// import { DONORS } from "../shared/donors";
 import { HeaderTitle } from "@react-navigation/stack";
 import NewModal from "../Component/newModal";
 import CustomButton from "../Component/button";
-
 
 const DonorPage = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -19,25 +25,35 @@ const DonorPage = () => {
     const [showNewDonor, setShowNewDonor] = useState(false);
 
     useEffect(() => {
-        setDonors(DONORS);
+        async function getdata() {
+            try {
+                const response = await fetch("http://localhost:3000/donors");
+                const jsonDonorsData = await response.json();
+                console.log(jsonDonorsData);
+                setDonors(jsonDonorsData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getdata();
     }, []);
 
     const myListEmpty = () => {
         return (
-            <View style={{ alignItems:"center" }}>
-            <Text style={styles.item}>No data found</Text>
+            <View style={{ alignItems: "center" }}>
+                <Text style={styles.item}>No data found</Text>
             </View>
         );
     };
 
     const toggleModal = (donor) => {
         setShowDonor(!showDonor);
-        setDonor(donor)
+        setDonor(donor);
     };
 
     const handleNewModal = () => {
         setShowNewDonor(!showNewDonor);
-        console.log({showNewDonor})
+        console.log({ showNewDonor });
     };
 
     const addNewDonor = (newDonor) => {
@@ -53,22 +69,22 @@ const DonorPage = () => {
                         <Text>{item.name}</Text>
                     </TouchableOpacity>
                 </View>
-            </Card>   
-        )
+            </Card>
+        );
     };
 
     return (
         <View>
-            <NewModal 
+            <NewModal
                 setModalState={handleNewModal}
                 modalState={showNewDonor}
                 setDonors={setDonors}
                 donors={donors}
             />
             <View>
-                <CustomButton 
+                <CustomButton
                     onPress={() => handleNewModal()}
-                    title='Add New Donor'
+                    title="Add New Donor"
                 />
             </View>
             <View>
@@ -81,45 +97,68 @@ const DonorPage = () => {
             </View>
             <HeaderTitle style={styles.root}>List of Donors</HeaderTitle>
             {!donors ? (
-                <Loading/>
+                <Loading />
             ) : (
                 <List
                     searchPhrase={searchPhrase}
                     data={donors}
                     setClicked={setClicked}
                     renderItem={renderDonorList}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item?._id?.toString()}
                 />
             )}
             <Modal
                 visible={showDonor}
-                onRequestClose={toggleModal}
-                >
+                onRequestClose={toggleModal}>
                 <View>
-                    <Card.Title style={styles.modaltitle}>Donor Information</Card.Title>
+                    <Card.Title style={styles.modaltitle}>
+                        Donor Information
+                    </Card.Title>
                     <Card>
-                        <Text style={styles.modaltext}>Name: <Text style={styles.donorId}>{donor.name}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Name:{" "}
+                            <Text style={styles.donorId}>{donor.name}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Phone Number: <Text style={styles.donorId}>{donor.phoneNumber}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Phone Number:{" "}
+                            <Text style={styles.donorId}>
+                                {donor.phoneNumber}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Email: <Text style={styles.donorId}>{donor.email}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Email:{" "}
+                            <Text style={styles.donorId}>{donor.email}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Affiliation: <Text style={styles.donorId}>{donor.withACompany}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Affiliation:{" "}
+                            <Text style={styles.donorId}>
+                                {donor.withACompany}
+                            </Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Thanked? <Text style={styles.donorId}>{donor.thanks}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Thanked?{" "}
+                            <Text style={styles.donorId}>{donor.thanks}</Text>
+                        </Text>
                     </Card>
                     <Card>
-                        <Text style={styles.modaltext}>Donor ID: <Text style={styles.donorId}>{donor.id}</Text></Text>
+                        <Text style={styles.modaltext}>
+                            Donor ID:{" "}
+                            <Text style={styles.donorId}>{donor._id}</Text>
+                        </Text>
                     </Card>
                     <Card.Divider />
                     <View>
-                        <CustomButton 
-                            onPress={() =>setShowDonor(!showDonor)}
-                            title='cancel'
+                        <CustomButton
+                            onPress={() => setShowDonor(!showDonor)}
+                            title="cancel"
                         />
                     </View>
                 </View>
@@ -144,11 +183,11 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: "#ccc",
     },
     modaltitle: {
         fontSize: 25,
@@ -163,12 +202,10 @@ const styles = StyleSheet.create({
     },
     donorId: {
         fontSize: 16,
-        fontWeight: 'normal',
-        color: 'black',
+        fontWeight: "normal",
+        color: "black",
     },
-    button: {
-
-    }
+    button: {},
 });
 
 export default DonorPage;
